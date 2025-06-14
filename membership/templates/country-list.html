@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<head>
+    <title>{{title}}</title>
+    <table>
+        <caption>{{title}}</caption>
+        {% for country in countriez %}
+        <ul>
+            <li><strong>{{country.code}}</strong> - {{country.name}}</strong></li>
+        </ul>
+        {% endfor %}
+    </table>
+</head>

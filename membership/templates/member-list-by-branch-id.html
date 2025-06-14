@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<head>
+    <title>{{title}}</title>
+    <div><a href="/membership/federations/{{branch.federation_id}}/branches/">&lt;&lt;&nbsp;Retour</a></div>
+    <table>
+        <caption>{{title}}</caption>
+        <tr><th colspan="3">Noms</th><th>Statut marital</th><th>Statut membre</th></tr>
+        {% for member in memberz %}
+        <tr>
+            <td><strong>{{member.first_name}} {{member.name}} {{member.postname}}</strong></td>
+            <td>{{member.branch.federation.name}}</td>
+            <td>{{member.branch.name}}</td>
+            <td>{{member.marital_status}}</td>
+            <td>{{member.category}}</td>
+        </tr>
+        {% empty %}
+        <tr><td>La branche {{branch.name}} ne comporte pas de membres.</td></tr>
+        {% endfor %}
+    </table>
+</head>

@@ -1,0 +1,55 @@
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render
+
+from membership.models import Branch, Member, Country, Federation
+def index(request):
+    return HttpResponse("Welcome to the members' zone !!!")
+
+def listMembers(request):
+    listTitle = "Member list"
+    memberList = Member.objects.all
+    return render(request,"member-list.html",{
+        'title':listTitle,
+        'user':request.user,
+        'memberz':memberList
+    })
+
+def listCountries(request):
+    listTitle = "Country list"
+    countryList = Country.objects.all
+    return render(request,"country-list.html",{
+        'title':listTitle,
+        'user':request.user,
+        'countriez':countryList
+    })
+
+def listFederations(request):
+    listTitle = "Federation list"
+    federationList = Federation.objects.all
+    return render(request,"federation-list.html",{
+        'title':listTitle,
+        'user':request.user,
+        'federationz':federationList
+    })
+
+def listBranchesByFederation(request, federation_id):
+    federation = get_object_or_404(Federation,id=federation_id)
+    listTitle = "Branch list for federation "+str(federation_id)
+    branchList = federation.branches.all()
+    return render(request,"branch-list-by-federation-id.html",{
+        'title':listTitle,
+        'user':request.user,
+        'branchez':branchList,
+        'federation':federation
+    })
+
+def listMembersByBranch(request, branch_id):
+    branch = get_object_or_404(Branch,id=branch_id)
+    listTitle = "Member list on branch "+branch.name
+    memberList = branch.members.all()
+    return render(request,"member-list-by-branch-id.html",{
+        'title':listTitle,
+        'user':request.user,
+        'memberz':memberList,
+        'branch':branch
+    })

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<head>
+    <title>{{title}}</title>
+    <div><a href="/membership/federations/">&lt;&lt;&nbsp;Retour</a></div>
+    <table>
+        <caption>{{title}}</caption>
+        {% for branch in branchez %}
+        <tr>
+            <td><strong>{{branch.name}}</strong></td><td>{{branch.description}}</td><td><a href="/membership/branches/{{branch.id}}/members">Voir les membres&nbsp;&gt;&gt;</a></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3">La fédération {{federation.name}} ne comporte aucune antenne.</td></tr>
+        {% endfor %}
+    </table>
+</head>

@@ -1,0 +1,97 @@
+from django.db import models
+from membership.models import Member
+
+class DiscountType(models.TextChoices):
+    DISCOUNT = "D", "Réduction"
+    DISCOUNT_PERCENTAGE = "P", "Pourcentage réduction"
+    FINAL_PRICE = "F", "Prix final"
+
+class Cart(models.Model):
+    creation_date = models.DateTimeField(null=True)
+    sending_date = models.DateTimeField(null=True)
+    confirmation_date = models.DateTimeField(null=True)
+    cancelling_date = models.DateTimeField(null=True)
+    orderer = models.ForeignKey(Member,on_delete=models.RESTRICT)
+    def __str__(self):
+        return self.orderer.first_name + " " + self.orderer.name + " " + self.orderer.postname + " " + self.creation_date
+
+class ProductGroup(models.Model):
+    creation_date = models.DateField(null=True)
+    name = models.CharField(max_length=50,unique=True)
+
+class Discount(models.Model):
+    creation_date = models.DateTimeField(null=True)
+    start_date = models.DateTimeField(null=True)
+    end_date = models.DateTimeField(null=True)
+    type = models.CharField(max_length=20,choices=DiscountType.choices,default=DiscountType.DISCOUNT_PERCENTAGE)
+    amount = models.FloatField()
+
+class Product(models.Model):
+    creation_date = models.DateTimeField(null=True)
+    name = models.CharField(max_length=100,null=True)
+    description = models.TextField(max_length=150)
+    current_price = models.FloatField(null=True)
+    current_discount = models.ForeignKey(Discount,related_name="discount",on_delete=models.RESTRICT,null=True)
+    current_final_price = models.FloatField(null=True)
+    groups = models.ManyToManyField(ProductGroup,related_name="groups")
+    
+    def update_final_price(self):
+        match self.current_discount.type:
+            
+            case DiscountType.DISCOUNT:
+                self.current_final_price = self.current_price - self.current_discount.amount
+            
+            case DiscountType.DISCOUNT_PERCENTAGE:
+                self.current_final_price = self.current_price * (1 - self.current_discount.amount/100)
+
+            case DiscountType.FINAL_PRICE:
+                self.current_final_price = self.current_discount.amount
+    
+    def __str__(self):
+        return self.name + " " + self.current_price + " " + self.creation_date
+
+
+class OrderLine(models.Model):
+    product = models.ForeignKey(Product,null=True,on_delete=models.RESTRICT)
+    cart = models.ForeignKey(Cart,null=True,on_delete=models.RESTRICT)
+    quantity = models.IntegerField(null=True)
+    used_price = models.FloatField(null=True)
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields = ["product","cart"],name = "unique_order_line")
+        ]
+    def __str__(self):
+        return self.product.name + " " + self.product.current_price + " " + self.used_price
+
+class PriceChange(models.Model):
+    product = models.ForeignKey(Product,null=True, on_delete=models.CASCADE)
+    creation_date = models.DateTimeField(null=True)
+    change_date = models.DateTimeField(null = True)
+    new_price = models.FloatField(null=True)
+    def __str__(self):
+        return self.product.name + " " + self.product.current_price + " " + self.used_price
+
+class Store(models.Model):
+    name = models.CharField(max_length=50,unique=True)
+    description = models.TextField(max_length=150)
+    def __str__(self):
+        return self.name + " - " + self.description
+
+class Storage(models.Model):
+    product = models.ForeignKey(Product,null=True, on_delete=models.RESTRICT)
+    store = models.ForeignKey(Store,null=True,on_delete=models.RESTRICT)
+    quantity = models.IntegerField(null=True)
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields = ["product","store"],name = "unique_storage")
+        ]
+    def __str__(self):
+        return str(self.quantity) +" items of "+self.product.name + " are present in " + self.quantity
+
+class StorageChange(models.Model):
+    product = models.ForeignKey(Product,null=True, on_delete=models.RESTRICT)
+    store = models.ForeignKey(Store,null=True,on_delete=models.RESTRICT)
+    date = models.DateTimeField(null=True)
+    quantity = models.IntegerField(null=True)
+    def __str__(self):
+        return "On "+ self.date +", "+ str(self.quantity) +" items of "+self.product.name + " were added in " + self.quantity

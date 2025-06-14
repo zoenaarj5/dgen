@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<head>
+    <title>{{title}}</title>
+    <table>
+        <caption>{{title}}</caption>
+        <tr><th colspan="2">Noms</th><th>Statut marital</th><th>Statut membre</th><th>Catégorie</th></tr>
+        {% for member in memberz %}
+        <tr>
+            <td><strong>{{member.first_name}} {{member.name}} {{member.postname}}</strong></td>
+            <td>{{member.branch.federation.name}}</td>
+            <td>{{member.marital_status}}</td>
+            <td>{{member.category}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</head>

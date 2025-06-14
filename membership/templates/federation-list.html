@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<head>
+    <title>{{title}}</title>
+    <table>
+        <caption>{{title}}</caption>
+        {% for federation in federationz %}
+        <tr>
+            <td><strong>{{federation.name}}</strong> - {{federation.country.name}}</strong></td><td><a href="/membership/federations/{{federation.id}}/branches/">Voir les antennes&nbsp;&gt;&gt;</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</head>
