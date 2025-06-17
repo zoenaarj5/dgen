@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<head>
-    <title>{{title}}</title>
+{% extends "master.html" %}
+    {% block title %}<h3>{{title}}</h3>{% endblock %}
+    {% block content %}
     <div><a href="/membership/federations/">&lt;&lt;&nbsp;Retour</a></div>
-    <table>
-        <caption>{{title}}</caption>
+    <table class="table table-dark">
+        <tr><th scope="col">Nom</th><th scope="col">Description</th><th scope="col"></th></tr>
         {% for branch in branchez %}
         <tr>
             <td><strong>{{branch.name}}</strong></td><td>{{branch.description}}</td><td><a href="/membership/branches/{{branch.id}}/members">Voir les membres&nbsp;&gt;&gt;</a></td>
@@ -12,4 +12,4 @@
         <tr><td colspan="3">La fédération {{federation.name}} ne comporte aucune antenne.</td></tr>
         {% endfor %}
     </table>
-</head>
+    {% endblock %}

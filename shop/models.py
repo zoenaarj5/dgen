@@ -30,9 +30,6 @@ class Product(models.Model):
     creation_date = models.DateTimeField(null=True)
     name = models.CharField(max_length=100,null=True)
     description = models.TextField(max_length=150)
-    current_price = models.FloatField(null=True)
-    current_discount = models.ForeignKey(Discount,related_name="discount",on_delete=models.RESTRICT,null=True)
-    current_final_price = models.FloatField(null=True)
     groups = models.ManyToManyField(ProductGroup,related_name="groups")
     
     def update_final_price(self):
@@ -50,9 +47,31 @@ class Product(models.Model):
     def __str__(self):
         return self.name + " " + self.current_price + " " + self.creation_date
 
+class StoredProduct(models.Model):
+    product = models.ForeignKey(Product,null=True, on_delete=models.RESTRICT)
+    store = models.ForeignKey(Store,null=True,on_delete=models.RESTRICT)
+    current_price = models.FloatField(null=True)
+    current_discount = models.ForeignKey(Discount,related_name="discount",on_delete=models.RESTRICT,null=True)
+    current_final_price = models.FloatField(null=True)
+    quantity = models.IntegerField(null=True)
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields = ["product","store"],name = "unique_storedProduct")
+        ]
+    def __str__(self):
+        return str(self.quantity) +" items of "+self.product.name + " are present in " + self.quantity
+
+class StorageChange(models.Model):
+    storedProduct = models.ForeignKey(StoredProduct,null=True,on_delete=models.RESTRICT)
+    creation_date = models.DateTimeField(null=True)
+    change_date = models.DateTimeField(null=True)
+    quantity = models.IntegerField(null=True)
+    comment = models.TextField(max_length=100,null=True)
+    def __str__(self):
+        return "On "+ self.date +", "+ str(self.quantity) +" items of "+self.storedProduct.product.name + " were added in " + self.quantity
 
 class OrderLine(models.Model):
-    product = models.ForeignKey(Product,null=True,on_delete=models.RESTRICT)
+    storedProduct = models.ForeignKey(StoredProduct,null=True,on_delete=models.RESTRICT)
     cart = models.ForeignKey(Cart,null=True,on_delete=models.RESTRICT)
     quantity = models.IntegerField(null=True)
     used_price = models.FloatField(null=True)
@@ -64,12 +83,12 @@ class OrderLine(models.Model):
         return self.product.name + " " + self.product.current_price + " " + self.used_price
 
 class PriceChange(models.Model):
-    product = models.ForeignKey(Product,null=True, on_delete=models.CASCADE)
+    storedProduct = models.ForeignKey(StoredProduct,null=True, on_delete=models.CASCADE)
     creation_date = models.DateTimeField(null=True)
     change_date = models.DateTimeField(null = True)
     new_price = models.FloatField(null=True)
     def __str__(self):
-        return self.product.name + " " + self.product.current_price + " " + self.used_price
+        return self.storedProduct.product.name + " " + self.storedProduct.current_price + " " + self.used_price
 
 class Store(models.Model):
     name = models.CharField(max_length=50,unique=True)
@@ -77,21 +96,3 @@ class Store(models.Model):
     def __str__(self):
         return self.name + " - " + self.description
 
-class Storage(models.Model):
-    product = models.ForeignKey(Product,null=True, on_delete=models.RESTRICT)
-    store = models.ForeignKey(Store,null=True,on_delete=models.RESTRICT)
-    quantity = models.IntegerField(null=True)
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields = ["product","store"],name = "unique_storage")
-        ]
-    def __str__(self):
-        return str(self.quantity) +" items of "+self.product.name + " are present in " + self.quantity
-
-class StorageChange(models.Model):
-    product = models.ForeignKey(Product,null=True, on_delete=models.RESTRICT)
-    store = models.ForeignKey(Store,null=True,on_delete=models.RESTRICT)
-    date = models.DateTimeField(null=True)
-    quantity = models.IntegerField(null=True)
-    def __str__(self):
-        return "On "+ self.date +", "+ str(self.quantity) +" items of "+self.product.name + " were added in " + self.quantity

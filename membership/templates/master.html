@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<head>
+    <meta title="AREP, notre pilier" description="AREP est un des partis politiques les plus en vue en République Démocratique du Congo." keywords="arep, congo, rdc, parti, politique, démocratie, république"></meta>
+    <title>AREP, Notre pilier</title>
+    <link rel="stylesheet" type="text/css" href=""/>
+</head>
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+<body class="bg-dark">
+    <header>{% block title %}{% endblock %}</header>
+    <nav>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a href="/membership/members/">Adhésions</a></li>
+            <li class="nav-item active"><a href="/membership/federations/">Fédérations</a></li>
+            <li class="nav-item"><a href="/membership/countries">Pays</a></li>
+        </ul>
+    </nav>
+    <section>
+    {% block content %}{% endblock %}
+    </section>
+    <script type="text/javascript" src=""></script>
+    <footer>Page développée par <b>Valentin Kavuna</b> | <a mailto="kacva@yahoo.com">kacva@yahoo.com</a></footer>
+</body>

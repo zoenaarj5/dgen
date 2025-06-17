@@ -1,12 +1,13 @@
-<!DOCTYPE html>
-<head>
-    <title>{{title}}</title>
-    <table>
-        <caption>{{title}}</caption>
+{% extends "master.html" %}
+    {% block title %}<h3>{{title}}</h3>{% endblock %}
+    {% block content %}
+    <table class="table table-dark">
+        <tr><th scope="col">Code</th><th>Name</th></tr>
         {% for country in countriez %}
-        <ul>
-            <li><strong>{{country.code}}</strong> - {{country.name}}</strong></li>
-        </ul>
+        <tr>
+            <th scope="row"><strong>{{country.code}}</strong></th><td>{{country.name}}</strong></td>
+        </tr>
         {% endfor %}
     </table>
+    {% endblock %}
 </head>

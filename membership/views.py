@@ -45,7 +45,7 @@ def listBranchesByFederation(request, federation_id):
 
 def listMembersByBranch(request, branch_id):
     branch = get_object_or_404(Branch,id=branch_id)
-    listTitle = "Member list on branch "+branch.name
+    listTitle = "Liste des adhésions via l'antenne "+branch.name
     memberList = branch.members.all()
     return render(request,"member-list-by-branch-id.html",{
         'title':listTitle,

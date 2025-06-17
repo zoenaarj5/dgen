@@ -1,16 +1,18 @@
-<!DOCTYPE html>
-<head>
-    <title>{{title}}</title>
-    <table>
-        <caption>{{title}}</caption>
-        <tr><th colspan="2">Noms</th><th>Statut marital</th><th>Statut membre</th><th>Catégorie</th></tr>
+{% extends "master.html" %}
+    {% block title %}<h3>{{title}}</h3>{% endblock %}
+    {% block content %}
+    <table class="table table-dark">
+        <tr><th scope="col">Noms</th><th scope="col">Fédération</th><th scope="col">Branche</th><th scope="col">Sexe</th><th scope="col">Statut marital</th><th scope="col">Statut membre</th><th scope="col">Catégorie</th></tr>
         {% for member in memberz %}
         <tr>
-            <td><strong>{{member.first_name}} {{member.name}} {{member.postname}}</strong></td>
+            <th scope="row"><strong>{{member.first_name}} {{member.name}} {{member.postname}}</strong></th>
             <td>{{member.branch.federation.name}}</td>
+            <td>{{member.branch.name}}</td>
+            <td>{{member.sex}}</td>
             <td>{{member.marital_status}}</td>
+            <td>{{member.status.name}}</td>
             <td>{{member.category}}</td>
         </tr>
         {% endfor %}
     </table>
-</head>
+    {% endblock %}
