@@ -2,6 +2,11 @@ from django.db import models
 from datetime import datetime
 from membership.models import Member, Federation
 
+class DiscountType(models.TextChoices):
+    SUBTRACT = "S","Réduction directe"
+    PERCENTAGE = "P","Pourcentage"
+    FINAL_PRICE = "F","Prix final"
+
 class ProductGroup(models.Model):
     name = models.CharField(max_length=100,null=True)
     description = models.TextField(max_length=150,null=True)
@@ -34,6 +39,15 @@ class ProductInStore(models.Model):
 
     def __str__(self):
         return str(self.quantity) +" items of "+self.product.name + " are present in " + self.quantity
+
+class Discount(models.Model):
+    #   A discount concerns a product in store.
+    productInStore = models.ForeignKey(ProductInStore,null=True,related_name="discounts",on_delete=models.RESTRICT)
+    creation_date = models.DateTimeField(null=True)
+    start_date = models.DateTimeField(null=True)
+    end_date = models.DateTimeField(null=True)
+    type = models.CharField(max_length=20,choices=DiscountType.choices,default=DiscountType.DISCOUNT_PERCENTAGE)
+    amount = models.FloatField()
 
 class StorageChange(models.Model):
     productInStore = models.ForeignKey(ProductInStore,null=True,on_delete=models.RESTRICT)
