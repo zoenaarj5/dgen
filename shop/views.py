@@ -9,10 +9,10 @@ def shopHome(request, federation_id):
     return HttpResponse("This is the shopping home page.")
 
 def listProducts(request):
-    productz = Product.objects.all()
+    productList = Product.objects.all()
     title = "Tous les produits"
     return render(request,"product-list.html",{
-        "products":productz,
+        "productz":productList,
         "title":title
     })
 
@@ -27,7 +27,7 @@ def showProduct(request,product_id):
 def listStores(request):
     storeList = Store.objects.all()
     title = "Liste des dépôts"
-    return render(request,"stores-list.html",{
+    return render(request,"store-list.html",{
         "storez":storeList,
         "title":title
     }) 

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Gender(models.TextChoices):
     MALE = "M", "Homme"
@@ -94,6 +95,7 @@ class Contact (models.Model):
         return self.id + " " + self.mobile_nr_1 + " " + self.email_1
 
 class Member (models.Model):
+    user = models.ForeignKey(User,null=True,related_name="members", on_delete=models.RESTRICT)
     branch = models.ForeignKey(Branch,on_delete=models.RESTRICT,null=True,related_name="members")
     email = models.CharField(max_length=50,null=True)
     name = models.CharField(max_length=100)     
