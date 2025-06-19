@@ -3,7 +3,9 @@ from django.shortcuts import get_object_or_404, render
 
 from membership.models import Branch, Member, Country, Federation
 def index(request):
-    return HttpResponse("Welcome to the members' zone !!!")
+    return render(request,"home.html",{
+        "title":"AREP, notre pilier"
+    })
 
 def listMembers(request):
     listTitle = "Member list"
