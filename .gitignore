@@ -1,3 +1,5 @@
 manage.py
 __pycache__
 venv/
+shop/migrations/
+shop/__pycache__/
