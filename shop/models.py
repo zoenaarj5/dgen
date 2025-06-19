@@ -1,6 +1,6 @@
 from django.db import models
 from datetime import datetime
-from membership.models import Member
+from membership.models import Member, Federation
 
 class ProductGroup(models.Model):
     name = models.CharField(max_length=100,null=True)
@@ -12,8 +12,14 @@ class Product(models.Model):
     groups = models.ManyToManyField(ProductGroup,related_name="products")
 
 class Store(models.Model):
+    # A Store belongs to a federation
     name = models.CharField(max_length=100,null=True)
     description = models.TextField(max_length=150,null=True)
+    federation = models.OneToOneField(Federation,null=True,on_delete=models.RESTRICT)
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields = ["federation","name"],name = "unique_storeNamePerFederation")
+        ]
 
 class ProductInStore(models.Model):
     product = models.ForeignKey(Product,null=True,on_delete=models.RESTRICT)
