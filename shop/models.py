@@ -46,7 +46,7 @@ class Discount(models.Model):
     creation_date = models.DateTimeField(null=True)
     start_date = models.DateTimeField(null=True)
     end_date = models.DateTimeField(null=True)
-    type = models.CharField(max_length=20,choices=DiscountType.choices,default=DiscountType.DISCOUNT_PERCENTAGE)
+    type = models.CharField(max_length=20,choices=DiscountType.choices,default=DiscountType.PERCENTAGE)
     amount = models.FloatField()
 
 class StorageChange(models.Model):
