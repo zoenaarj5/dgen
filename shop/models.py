@@ -28,7 +28,7 @@ class Store(models.Model):
 
 class ProductInStore(models.Model):
     product = models.ForeignKey(Product,null=True,on_delete=models.RESTRICT)
-    store = models.ForeignKey(Store,null=True,on_delete=models.RESTRICT)
+    store = models.ForeignKey(Store,null=True,related_name="productsInStore",on_delete=models.RESTRICT)
     quantity = models.IntegerField(default=0)
     current_price = models.FloatField(null=True)
 
