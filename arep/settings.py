@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'arep.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'arep',
+        'NAME': 'rp',
         'USER': 'postgres',
         'PASSWORD': 'Am@vut4',
         'HOST': 'localhost',
@@ -97,6 +97,10 @@ DATABASES = {
     }
 }
 '''
+AUTH_USER_MODEL = 'core.RpUser'
+
+AUTHENTICATION_BACKENDS = ['core.backends.EmailOrPhoneBackend']
+
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 

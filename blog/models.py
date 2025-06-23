@@ -1,6 +1,6 @@
 import datetime
 from django.db import models
-from django.contrib.auth.models import User
+from core.models import RpUser
 
 
 class Article(models.Model):
@@ -10,7 +10,9 @@ class Article(models.Model):
     publishing_date = models.DateTimeField(null=True)
     removal_date = models.DateTimeField(null=True)
     blocking_date = models.DateTimeField(null=True)
-    author = models.ForeignKey(User,null=True,related_name="articles", on_delete=models.RESTRICT)
+    author = models.ForeignKey(RpUser,null=True,related_name="articles", on_delete=models.RESTRICT)
+    def __str__(self):
+        return self.title + "|" + self.publishing_date
 
 class ReactionType(models.TextChoices):
     LIKE = "L", "J'aime"
@@ -21,10 +23,12 @@ class ReactionType(models.TextChoices):
     NO_REACTION = "NR", "Pas de réaction"
 
 class Reaction(models.Model):
-    author = models.ForeignKey(User,null=True,related_name="reactions",on_delete=models.CASCADE)
+    author = models.ForeignKey(RpUser,null=True,related_name="reactions",on_delete=models.CASCADE)
     type = models.CharField(max_length=20, choices=ReactionType.choices,default=ReactionType.NO_REACTION)
+    def __str__(self):
+        return self.type+"|"+self.author.first_name
 
 class Comment(models.Model):
     article = models.ForeignKey(Article,related_name="comments",null=True,on_delete=models.CASCADE)
-    author = models.ForeignKey(User,null=True,on_delete=models.CASCADE)
+    author = models.ForeignKey(RpUser,null=True,on_delete=models.CASCADE)
     content = models.TextField(max_length=1000,null=True)

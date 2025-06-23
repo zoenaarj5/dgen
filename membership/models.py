@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from core.models import RpUser
 
 class Gender(models.TextChoices):
     MALE = "M", "Homme"
@@ -95,7 +95,7 @@ class Contact (models.Model):
         return self.id + " " + self.mobile_nr_1 + " " + self.email_1
 
 class Member (models.Model):
-    user = models.ForeignKey(User,null=True,related_name="members", on_delete=models.RESTRICT)
+    user = models.ForeignKey(RpUser,null=True,related_name="members", on_delete=models.RESTRICT)
     branch = models.ForeignKey(Branch,on_delete=models.RESTRICT,null=True,related_name="members")
     email = models.CharField(max_length=50,null=True)
     name = models.CharField(max_length=100)     
@@ -111,11 +111,11 @@ class Member (models.Model):
     function = models.CharField(max_length=100,null=True)
     roles = models.ManyToManyField(Role,related_name="roles")
     category = models.CharField(max_length=10,choices=MemberCategory.choices,default=MemberCategory.ORDINARY)
-    contact = models.OneToOneField(Contact,related_name="contact",on_delete=models.RESTRICT,null=True)
     profession = models.CharField(max_length=50,null=True)
     grade = models.ForeignKey(Grade,on_delete=models.RESTRICT,null=True)
     marital_status = models.CharField(max_length=10,choices=MaritalStatus.choices,default=MaritalStatus.UNKNOWN)
     child_count = models.IntegerField(default=0)
+    contact = models.OneToOneField(Contact,null=True,on_delete=models.RESTRICT)
     def __str__(self):
         return self.first_name + " | " + self.name + " | " + self.postname
 
