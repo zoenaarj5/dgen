@@ -1,0 +1,30 @@
+import datetime
+from django.db import models
+from django.contrib.auth.models import User
+
+
+class Article(models.Model):
+    title = models.CharField(max_length=150,null=True,unique=True)
+    content = models.TextField(max_length=1000,null=True)
+    creation_date = models.DateTimeField(default=datetime.datetime.now)
+    publishing_date = models.DateTimeField(null=True)
+    removal_date = models.DateTimeField(null=True)
+    blocking_date = models.DateTimeField(null=True)
+    author = models.ForeignKey(User,null=True,related_name="articles", on_delete=models.RESTRICT)
+
+class ReactionType(models.TextChoices):
+    LIKE = "L", "J'aime"
+    DO_NOT_LIKE = "NL", "Je n'aime pas" 
+    FUNNY = "F", "Drôle"
+    SAD = "S", "Triste"
+    INDIFFERENT = "I", "Indifférent"
+    NO_REACTION = "NR", "Pas de réaction"
+
+class Reaction(models.Model):
+    author = models.ForeignKey(User,null=True,related_name="reactions",on_delete=models.CASCADE)
+    type = models.CharField(max_length=20, choices=ReactionType.choices,default=ReactionType.NO_REACTION)
+
+class Comment(models.Model):
+    article = models.ForeignKey(Article,related_name="comments",null=True,on_delete=models.CASCADE)
+    author = models.ForeignKey(User,null=True,on_delete=models.CASCADE)
+    content = models.TextField(max_length=1000,null=True)

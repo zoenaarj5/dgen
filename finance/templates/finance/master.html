@@ -1,0 +1,10 @@
+{% extends "core/master.html" %}
+{% block mainTitle %}<title>AREP - Finances</title>{% endblock %}
+    <header>{% block title %}{% endblock %}</header>
+    {% block subMenu %}
+    <ul class="navbar-nav mr-auto expand-lg bg-body-tertiary">
+        <li class="nav-item"><a href="/finance/">Accueil</a></li>
+        <li class="nav-item"><a href="/finance/numbers/">Chiffres</a></li>
+    </ul>
+    {% endblock %}
+    {% block content %}{% endblock %}

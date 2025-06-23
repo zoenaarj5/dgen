@@ -1,0 +1,12 @@
+{% extends "core/master.html" %}
+{% block mainTitle %}<title>AREP - Finances</title>{% endblock %}
+    <header>{% block title %}{% endblock %}</header>
+    {% block subMenu %}
+    <ul class="navbar-nav mr-auto expand-lg bg-body-tertiary">
+        <li class="nav-item"><a href="/membership/">Accueil membres</a></li>
+        <li class="nav-item"><a href="/membership/members/">Adhésions</a></li>
+        <li class="nav-item active"><a href="/membership/federations/">Fédérations</a></li>
+        <li class="nav-item"><a href="/membership/countries">Pays</a></li>
+    </ul>
+    {% endblock %}
+    {% block content %}{% endblock %}
