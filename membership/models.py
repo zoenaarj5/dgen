@@ -68,12 +68,13 @@ class MemberTitle (models.Model):
     def __str__(self):
         return self.code + " " + self.name
     
-class MemberStatus (models.Model):
-    code = models.CharField(max_length=5,primary_key=True)
-    name = models.CharField(max_length=30,unique=True)
-    description = models.TextField(max_length=200)
-    def __str__(self):
-        return self.code + " " + self.name
+class MemberStatus (models.TextChoices):
+    ACTIVE =        "AC","Actif"
+    NON_ACTIVE =    "NA","Inactif"
+    SUSPENDED =     "SP","Suspendu"
+    PENDING =       "PD","En attente"
+    IN_COURSE =     "IC","Inscription en cours"
+    REMOVED =       "RM","Radié"
 
 class Grade (models.Model):
     name = models.CharField(max_length=100)
@@ -97,7 +98,6 @@ class Contact (models.Model):
 class Member (models.Model):
     user = models.ForeignKey(RpUser,null=True,related_name="members", on_delete=models.RESTRICT)
     branch = models.ForeignKey(Branch,on_delete=models.RESTRICT,null=True,related_name="members")
-    email = models.CharField(max_length=50,null=True)
     name = models.CharField(max_length=100)     
     postname = models.CharField(max_length=100)
     first_name = models.CharField(max_length=100)
@@ -107,7 +107,7 @@ class Member (models.Model):
     registration_end_date = models.DateTimeField(null=True)
     sponsored = models.BooleanField(default=False)
     sponsor = models.ForeignKey("self",name="sponsor",on_delete=models.CASCADE,null=True)
-    status = models.ForeignKey(MemberStatus,on_delete=models.RESTRICT,null=True)
+    status = models.CharField(max_length=10,choices=MemberStatus.choices,default=MemberStatus.NON_ACTIVE)
     function = models.CharField(max_length=100,null=True)
     roles = models.ManyToManyField(Role,related_name="roles")
     category = models.CharField(max_length=10,choices=MemberCategory.choices,default=MemberCategory.ORDINARY)

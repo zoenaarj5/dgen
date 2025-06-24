@@ -1,5 +1,7 @@
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
+from .forms import RpUserForm,MemberForm, ContactForm
+from django.db import transaction
 
 from membership.models import Branch, Member, Country, Federation
 def index(request):
@@ -56,3 +58,27 @@ def listMembersByBranch(request, branch_id):
         'memberz':memberList,
         'branch':branch
     })
+
+def addMember(request):
+    if request.method == "POST":
+        rpUser_form = RpUserForm(request.POST)
+        member_form = MemberForm(request.POST)
+        contact_form = ContactForm(request.POST)
+        if rpUser_form.is_valid() and member_form.is_valid() and contact_form.is_valid():
+            with transaction.atomic():
+                contact = contact_form.save()
+                rpUser = rpUser_form.save()
+                member = member_form.save()
+            return redirect("member_success")
+    else:
+        member_form = MemberForm()
+        contact_form = ContactForm()
+        rpUser_form = RpUserForm()
+
+    return render(
+        request, "add-member.html",{
+        "title":"Ajout nouveau membre",
+        "member_form":member_form,
+        "contact_form":contact_form,
+        "rpUser_form" : rpUser_form,
+    }) 
