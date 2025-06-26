@@ -7,6 +7,10 @@
         <tr>
             <th scope="row"><strong>{{country.code}}</strong></th><td>{{country.name}}</strong></td>
         </tr>
+        {% empty %}
+        <tr>
+            <td colspan="2"></td>
+        </tr>
         {% endfor %}
     </table>
     {% endblock %}

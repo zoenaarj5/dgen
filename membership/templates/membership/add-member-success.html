@@ -1,14 +1,11 @@
 {% extends "membership/master.html" %}
     {% block title %}{{title}}{% endblock %}
     {% block content %}
-    <form method="post">
         {% csrf_token %}
         <h3>RpUser info</h3>
         {{rpUser_form.as_p}}
         <h3>Contact info</h3>
         {{contact_form.as_p}}
         <h3>Member info</h3>
-        {{member_form.as_p}}
-        <button type="submit" class="btn btn-primary">Ajouter</button>
-    </form>
+        {{Member_form.as_p}}
     {% endblock %}

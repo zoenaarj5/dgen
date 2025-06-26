@@ -1,9 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
-from .forms import RpUserForm,MemberForm, ContactForm
+from .forms import RpUserForm,MemberForm, ContactForm, FederationForm
 from django.db import transaction
-
 from membership.models import Branch, Member, Country, Federation
+
 def index(request):
     title = "AREP, notre pilier"
     return render(request,"membership/home.html",{
@@ -69,16 +69,44 @@ def addMember(request):
                 contact = contact_form.save()
                 rpUser = rpUser_form.save()
                 member = member_form.save()
-            return redirect("member_success")
+            return redirect("membership/add-member-success")
     else:
         member_form = MemberForm()
         contact_form = ContactForm()
         rpUser_form = RpUserForm()
 
     return render(
-        request, "add-member.html",{
+        request, "membership/add-member.html",{
         "title":"Ajout nouveau membre",
         "member_form":member_form,
         "contact_form":contact_form,
         "rpUser_form" : rpUser_form,
     }) 
+
+def addMemberSuccess(request,member_id):
+    newMember = get_object_or_404(Member,id=member_id)
+    return render("membership/add-member-success",{
+        "member":newMember
+    })
+
+def addFederation(request):
+    if request.method == "POST":
+        federation_form = FederationForm(request.POST)
+        if(federation_form.is_valid()):
+            with transaction.atomic():
+                federation = federation_form.save()
+                return redirect("addFederationSuccess",federation_id=federation.id)
+    else:
+        federation_form = FederationForm()
+
+    return render(request,"membership/add-federation.html",{
+        "title":"Nouvelle fédération",
+        "federation_form":federation_form
+    })
+
+def addFederationSuccess(request,federation_id):
+    newFederation = get_object_or_404(Federation,id=federation_id)
+    return render("membership/add-federation-success",{
+        "federation":newFederation,
+        "title":f"La fédération \"{newFederation.name}\" a été créée avec succès."
+    })

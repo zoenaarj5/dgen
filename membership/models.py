@@ -1,5 +1,6 @@
 from django.db import models
 from core.models import RpUser
+from datetime import datetime
 
 class Gender(models.TextChoices):
     MALE = "M", "Homme"
@@ -16,8 +17,7 @@ class MaritalStatus(models.TextChoices):
 class MemberCategory (models.TextChoices):
     HONOR = "H", "Membre d'honneur"
     ORDINARY = "O", "Membre ordinaire"
-    UNKNOWN = "U", "Inconnu"
-
+    
 class Country(models.Model):
     code = models.CharField(max_length=3,primary_key=True)
     name = models.CharField(max_length=50,unique=True)
@@ -42,7 +42,7 @@ class Federation (models.Model):
     country = models.ForeignKey(Country,on_delete=models.RESTRICT,null=True)
     responsible = models.CharField(max_length=100,null=True)
     def __str__(self):
-        return self.code + " " + self.name
+        return str(self.id) + " " + self.name
 
 class Branch (models.Model):
     name = models.CharField(max_length=100)
@@ -76,10 +76,16 @@ class MemberStatus (models.TextChoices):
     IN_COURSE =     "IC","Inscription en cours"
     REMOVED =       "RM","Radié"
 
-class Grade (models.Model):
-    name = models.CharField(max_length=100)
-    def __str__(self):
-        return self.id + " " + self.name
+class Grade (models.TextChoices):
+    NONE        =   "N",    "Aucun"
+    BREVET      =   "BV",    "Brevet"
+    HIGH_SCHOOL =   "HS",    "Baccalauréat"
+    BACHELOR    =   "BC",    "Bachelier"
+    GRADUAT     =   "GD",    "Graduat"
+    LICENSE     =   "LC",    "Licence"
+    MASTER      =   "MA",    "Master"
+    PHD         =   "PH",    "Doctorat"
+    ENGINEER    =   "EN",    "Ingénieur"
     
 
 class Contact (models.Model):
@@ -87,6 +93,8 @@ class Contact (models.Model):
     street_nr = models.CharField(max_length=10)
     street_box = models.CharField(max_length=10)
     zip_code = models.CharField(max_length=10)
+    city = models.CharField(max_length=100)
+    country = models.ForeignKey(Country,null=True,on_delete=models.RESTRICT)
     mobile_nr_1 = models.CharField(max_length=20)
     mobile_nr_2 = models.CharField(max_length=20)
     fixed_nr_1 = models.CharField(max_length=20)
@@ -103,16 +111,16 @@ class Member (models.Model):
     first_name = models.CharField(max_length=100)
     sex = models.CharField(max_length=10,choices = Gender.choices,default=Gender.UNKNOWN)
     birthdate = models.DateField()
-    registration_start_date = models.DateTimeField(null=True)
+    registration_start_date = models.DateTimeField(null=True,default=datetime.now)
     registration_end_date = models.DateTimeField(null=True)
     sponsored = models.BooleanField(default=False)
-    sponsor = models.ForeignKey("self",name="sponsor",on_delete=models.CASCADE,null=True)
+    sponsor = models.ForeignKey("self",name="sponsor",on_delete=models.RESTRICT,null=True)
     status = models.CharField(max_length=10,choices=MemberStatus.choices,default=MemberStatus.NON_ACTIVE)
     function = models.CharField(max_length=100,null=True)
-    roles = models.ManyToManyField(Role,related_name="roles")
+    roles = models.CharField(max_length=100,null=True)
     category = models.CharField(max_length=10,choices=MemberCategory.choices,default=MemberCategory.ORDINARY)
     profession = models.CharField(max_length=50,null=True)
-    grade = models.ForeignKey(Grade,on_delete=models.RESTRICT,null=True)
+    grade = models.CharField(max_length=20,choices=Grade.choices,default=Grade.NONE)
     marital_status = models.CharField(max_length=10,choices=MaritalStatus.choices,default=MaritalStatus.UNKNOWN)
     child_count = models.IntegerField(default=0)
     contact = models.OneToOneField(Contact,null=True,on_delete=models.RESTRICT)

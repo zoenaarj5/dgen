@@ -1,0 +1,11 @@
+{% extends "membership/master.html" %}
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <h3>Ajout de fédération</h3>
+    {{federation_form.as_p}}
+    <button type="submit">Créer</button>
+</form>
+
+{% endblock %}

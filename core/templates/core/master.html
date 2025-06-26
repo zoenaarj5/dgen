@@ -7,17 +7,39 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% load static %}
-<body>
-    <header class="col-2"><img src="{% static 'logo_3.png' %}"/></header>
+<body class="bg-dark">
+    <header class="col-2"><a href="/"><img src="{% static 'logo_3.png' %}"/></a></header>
     <nav class="navbar navbar-expand-sm">
-        <ul>
-            <li><a href="/membership">Membres</a></li>
-            <li><a href="/shop">Boutique</a></li>
-            <li><a href="/finance">Finances</a></li>
+        <ul id="main-menu">
+            <li class="main-menu-item"><a href="/membership">Membres</a></li>
+            <li class="main-menu-item"><a href="/shop">Boutique</a></li>
+            <li class="main-menu-item"><a href="/finance">Finances</a></li>
         </ul>
     </nav>
     <div class="bg-dark text-light">{% block title %}{% endblock %}</div>
     {% block subMenu %}{% endblock %}
     {% block content %}{% endblock %}
     <footer>Page développée par <b>Valentin Kavuna</b> | <a mailto="kacva@yahoo.com">kacva@yahoo.com</a></footer>
+    <style>
+        body{
+            background:red;
+            color:#FEA;
+        }
+        a{
+            color:#AFF;
+        }a:hover{
+            color:green;
+        }a:visited{
+            color:#AFF;
+        }
+        #main-menu:{
+            background-color:black;
+            color:lightgray;
+        }
+        .main-menu-item:{
+            display:inline;
+            margin-left:1em;
+            text-transform: capitalize;
+        }
+    </style>
 </body>
