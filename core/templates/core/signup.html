@@ -1,0 +1,13 @@
+{% extends "core/master.html" %}
+{% block mainTitle %}{% endblock %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{form.non_field_errors}}
+    <div>{{form.email.label_tag}}<br>           {{form.email}}</div>
+    <div>{{form.phone_number.label_tag}}<br/>   {{form.phone_number}}</div>
+    <div>{{form.password.labe_tag}}<br/>        {{form.password}}</div>
+    <div><button>Go</button></div>
+    <div>Pas encore enregistré?&nbsp;&nbsp;<a href="{% url 'signup' %}">S'enregistrer</a></div>
+</form>
+{% endblock %}

@@ -1,0 +1,40 @@
+header{
+    height:6em;
+}header>div{
+    height:100%;
+}header>div img{
+    height:100%;
+    width:100%;
+}#main-menu-left{
+    background:rgba(0,0,0,0);
+    display:inline-block;
+    width:100%;
+    padding:1px 1px 2px 1px;
+    border-bottom: solid rgb(43,45,131);
+}#main-menu-left li{
+    text-transform: uppercase;
+    background: #354;
+    display:inline-block;
+    margin:0;
+    padding: .7em .7em .7em .7em;
+}#main-menu-left li:hover{
+    background-color: rgb(43,45,131);
+}#main-menu-left li>a{
+    color: white;
+    text-decoration:none;
+}#main-menu-left li>a:hover{
+    color:#FEA;
+}.sub-menu{
+    background-color: rgba(43,45,131,5);
+    list-style-type: none;
+    padding:0;
+}.sub-menu a{
+    text-decoration: none;
+}.sub-menu li{
+    background-color:#354;
+    text-transform: uppercase;
+    display:inline-block;
+    padding: .5em .5em .5em .5em;
+}.sub-menu li:hover{
+    background-color: rgba(0,0,0,1);
+}

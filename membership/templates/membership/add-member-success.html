@@ -2,8 +2,8 @@
     {% block title %}{{title}}{% endblock %}
     {% block content %}
         {% csrf_token %}
-        <h3>RpUser info</h3>
-        {{rpUser_form.as_p}}
+        <h3>User info</h3>
+        {{user_form.as_p}}
         <h3>Contact info</h3>
         {{contact_form.as_p}}
         <h3>Member info</h3>

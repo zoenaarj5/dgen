@@ -1,6 +1,6 @@
 from django import forms
 from .models import Member, Contact, Federation
-from .models import RpUser 
+from accounts.models import ArepUser 
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
@@ -10,13 +10,13 @@ class ContactForm(forms.ModelForm):
             "email_1","email_2","city","country"
                   ]
 
-class RpUserForm(forms.ModelForm):
+class ArepUserForm(forms.ModelForm):
     email_conf = forms.EmailField(label="Confirmer email")
     phone_number_conf = forms.CharField(max_length=15,label="Confirmer tél.")
     password_conf = forms.CharField(widget=forms.PasswordInput,label="Confirmer mot de passe") 
     password = forms.CharField(widget=forms.PasswordInput, label = "Mot de passe")
     class Meta:
-        model = RpUser
+        model = ArepUser
         fields = [
             "email","email_conf","phone_number","phone_number_conf",
             "password","password_conf"

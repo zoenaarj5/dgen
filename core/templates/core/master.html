@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<head>
-    <meta title="AREP, notre pilier" description="AREP est un des partis politiques les plus en vue en République Démocratique du Congo." keywords="arep, congo, rdc, parti, politique, démocratie, république"></meta>
-    {% block mainTitle %}{% endblock %}
-</head>
 {% load bootstrap5 %}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% load static %}
-<body class="bg-dark">
-    <header class="col-2"><a href="/"><img src="{% static 'logo_3.png' %}"/></a></header>
-    <nav class="navbar navbar-expand-sm">
-        <ul id="main-menu">
+<head>
+    <meta title="AREP, notre pilier" description="AREP est un des partis politiques les plus en vue en République Démocratique du Congo." keywords="arep, congo, rdc, parti, politique, démocratie, république"></meta>
+    {% block mainTitle %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'style/main.css' %}">
+</head>
+<body class="bg-dark col">
+    <header class="row"><div class="col-sm-3"><a href="/"><img src="{% static 'img/logo_3.png' %}"/></a></div><div class="col-sm-9"><img src="{% static 'img/congo-basin.jpg' %}" alt=""></div></header>
+    <nav id="main-menu-bar" class="navbar navbar-expand-sm">
+        <ul id="main-menu-left">
             <li class="main-menu-item"><a href="/membership">Membres</a></li>
             <li class="main-menu-item"><a href="/shop">Boutique</a></li>
             <li class="main-menu-item"><a href="/finance">Finances</a></li>
         </ul>
+        <ul id="main-menu-right"><li><a href="/core/login">Log in</a></li></ul>
     </nav>
     <div class="bg-dark text-light">{% block title %}{% endblock %}</div>
     {% block subMenu %}{% endblock %}

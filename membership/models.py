@@ -1,5 +1,5 @@
 from django.db import models
-from core.models import RpUser
+from accounts.models import ArepUser
 from datetime import datetime
 
 class Gender(models.TextChoices):
@@ -104,7 +104,7 @@ class Contact (models.Model):
         return self.id + " " + self.mobile_nr_1 + " " + self.email_1
 
 class Member (models.Model):
-    user = models.ForeignKey(RpUser,null=True,related_name="members", on_delete=models.RESTRICT)
+    user = models.ForeignKey(ArepUser,null=True,related_name="members", on_delete=models.RESTRICT)
     branch = models.ForeignKey(Branch,on_delete=models.RESTRICT,null=True,related_name="members")
     name = models.CharField(max_length=100)     
     postname = models.CharField(max_length=100)

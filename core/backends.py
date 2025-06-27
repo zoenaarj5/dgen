@@ -9,12 +9,12 @@ class EmailOrPhoneBackend(ModelBackend):
         if username:
             try:
                 if "@" in username:
-                    user = User.objects.get(email = username)
+                    user = User.objects.get(email__iexact = username)
                 else:
                     user = User.objects.get(phone_number = username)
             except User.DoesNotExist:
                 return None
             
-            if user.check_password(password) and self.user_can_authenticate(user):
+            if user and user.check_password(password) and self.user_can_authenticate(user):
                 return user
         return None

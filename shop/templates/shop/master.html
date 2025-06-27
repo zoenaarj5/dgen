@@ -2,11 +2,6 @@
 {% block mainTitle %}<title>AREP - Boutique</title>{% endblock %}
     <header>{% block title %}{% endblock %}</header>
     {% block subMenu %}
-    <ul class="navbar-nav mr-auto expand-lg bg-body-tertiary">
-        <li class="nav-item"><a href="/shop/">Accueil</a></li>
-        <li class="nav-item"><a href="/shop/stores/">Dépôts</a></li>
-        <li class="nav-item active"><a href="/shop/products/">Produits</a></li>
-        <li class="nav-item active"><a href="/shop/add-product/">Nouveau produit</a></li>
-    </ul>
+    {% include "shop/part/submenu.html" %}
     {% endblock %}
     {% block content %}{% endblock %}
