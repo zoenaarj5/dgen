@@ -5,7 +5,13 @@ header{
 }header>div img{
     height:100%;
     width:100%;
-}#main-menu-left{
+}
+
+table th,table td{
+    border-collapse: collapse;
+    border: solid blue 1px;
+}
+#main-menu-left{
     background:rgba(0,0,0,0);
     display:inline-block;
     width:100%;

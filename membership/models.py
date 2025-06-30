@@ -47,7 +47,7 @@ class Federation (models.Model):
 class Branch (models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=200)
-    federation = models.ForeignKey(Federation,on_delete=models.RESTRICT,related_name="branches")
+    federation = models.ForeignKey(Federation,on_delete=models.RESTRICT,related_name="branches",null=True)
     class Meta:
         constraints = [
             models.UniqueConstraint(fields = ["federation","name"],name = "unique_federation_branch")

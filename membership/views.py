@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from accounts.forms import ArepUserCreationForm
-from .forms import MemberForm, ContactForm, FederationForm
+from .forms import MemberForm, ContactForm, FederationForm, BranchForm
 from django.db import transaction
 from membership.models import Branch, Member, Country, Federation
 
@@ -90,13 +90,38 @@ def addMemberSuccess(request,member_id):
         "member":newMember
     })
 
+def addBranchToFederation(request,federation_id):
+    federation = get_object_or_404(Federation,id=federation_id)
+    if request.method == "POST":
+        branch_form = BranchForm(request.POST)
+        if(branch_form.is_valid()):
+            with transaction.atomic():
+                branch = branch_form.save()
+                branch.federation = federation
+                branch.save()
+                return redirect(f"/membership/add-branch-success/{branch.id}")
+    else:
+        branch_form = BranchForm()
+
+    return render(request,"membership/add-branch.html",{
+        "title":f"Nouvelle branche pour la fédération \"{federation.name}\"",
+        "branch_form":branch_form
+    })
+
+def addBranchSuccess(request,branch_id):
+    newBranch = get_object_or_404(Branch,id=branch_id)
+    return render(request,"membership/add-branch-success.html",{
+        "branch":newBranch,
+        "title":f"La branche \"{newBranch.name}\" de la fédération \"{newBranch.federation.name}\" a été créée avec succès."
+    })
+
 def addFederation(request):
     if request.method == "POST":
         federation_form = FederationForm(request.POST)
         if(federation_form.is_valid()):
             with transaction.atomic():
                 federation = federation_form.save()
-                return redirect("addFederationSuccess",federation_id=federation.id)
+                return redirect(f"/membership/add-federation-success/{federation.id}")
     else:
         federation_form = FederationForm()
 
@@ -107,7 +132,7 @@ def addFederation(request):
 
 def addFederationSuccess(request,federation_id):
     newFederation = get_object_or_404(Federation,id=federation_id)
-    return render("membership/add-federation-success",{
+    return render(request,"membership/add-federation-success.html",{
         "federation":newFederation,
         "title":f"La fédération \"{newFederation.name}\" a été créée avec succès."
     })

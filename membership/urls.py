@@ -3,6 +3,8 @@ from django.urls import path
 from . import views
 urlpatterns = [
     path("",views.index,name="index"),
+    path("federation/<int:federation_id>/add-branch",views.addBranchToFederation,name="addBranchToFederation"),
+    path("add-branch-success/<int:branch_id>",views.addBranchSuccess,name="addBranchSuccess"),
     path("add-member/",views.addMember,name="addMember"),
     path("add-member-success/",views.addMemberSuccess,name="addMemberSuccess"),
     path("add-federation/",views.addFederation,name="addFederation"),

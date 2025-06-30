@@ -1,0 +1,6 @@
+{% extends "shop/master.html" %}
+    {% block title %}{{title}}{% endblock %}
+    {% block content %}
+    <div>{{branch.description}}</div>
+    <div><a href="/membership/federations/{{branch.federation.id}}/branches">&lt;&lt;Branches dans {{branch.federation.name}}</a></div>
+    {% endblock %}

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Member, Contact, Federation
+from .models import Member, Contact, Federation, Branch
 from accounts.models import ArepUser 
 class ContactForm(forms.ModelForm):
     class Meta:
@@ -32,6 +32,11 @@ class MemberForm(forms.ModelForm):
             "category","profession","grade","marital_status",
             "child_count"
         ]
+
+class BranchForm(forms.ModelForm):
+    class Meta:
+        model = Branch
+        fields = ["name","description"]
 
 class FederationForm(forms.ModelForm):
     class Meta:
