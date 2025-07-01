@@ -39,6 +39,7 @@ class Role(models.Model):
 
 class Federation (models.Model):
     name = models.CharField(max_length=100,unique=True)
+    description = models.TextField(max_length=500,null=True)
     country = models.ForeignKey(Country,on_delete=models.RESTRICT,null=True)
     responsible = models.CharField(max_length=100,null=True)
     def __str__(self):

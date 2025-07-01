@@ -1,11 +1,6 @@
 {% extends "membership/master.html" %}
     {% block title %}{{title}}{% endblock %}
     {% block content %}
-        {% csrf_token %}
-        <h3>User info</h3>
-        {{user_form.as_p}}
-        <h3>Contact info</h3>
-        {{contact_form.as_p}}
-        <h3>Member info</h3>
-        {{Member_form.as_p}}
+    <div>Le membre a été ajouté correctement.</div>
+    <div><a href="/membership/members">&lt;&lt;Retour aux membres</a></div>
     {% endblock %}

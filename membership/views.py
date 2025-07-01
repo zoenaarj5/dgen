@@ -68,8 +68,13 @@ def addMember(request):
         if user_form.is_valid() and member_form.is_valid() and contact_form.is_valid():
             with transaction.atomic():
                 contact = contact_form.save()
+                contact.save()
                 user = user_form.save()
+                user.save()
                 member = member_form.save()
+                member.user=user
+                member.contact=contact
+                member.save()
             return redirect("membership/add-member-success")
     else:
         member_form = MemberForm()

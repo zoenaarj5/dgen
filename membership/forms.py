@@ -41,4 +41,4 @@ class BranchForm(forms.ModelForm):
 class FederationForm(forms.ModelForm):
     class Meta:
         model = Federation
-        fields = ["name","country","responsible"]
+        fields = ["name","country","responsible","description"]
