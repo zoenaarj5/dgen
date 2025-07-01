@@ -1,0 +1,10 @@
+{% extends "accounts/master.html" %}
+{% block title %}<h3>{{title}}</h3>{% endblock %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Go</button>
+    </form>
+    <div><a href="{% url 'register' %}">Je n'ai pas de compte, inscrivez-moi</a></div>
+{% endblock %}
