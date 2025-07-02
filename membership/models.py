@@ -111,11 +111,11 @@ class Member (models.Model):
     postname = models.CharField(max_length=100)
     first_name = models.CharField(max_length=100)
     sex = models.CharField(max_length=10,choices = Gender.choices,default=Gender.UNKNOWN)
-    birthdate = models.DateField()
-    registration_start_date = models.DateTimeField(null=True,default=datetime.now)
-    registration_end_date = models.DateTimeField(null=True)
+    birthdate = models.DateField(null=True)
+    registration_start_date = models.DateTimeField(null=True,blank=True,default=datetime.now)
+    registration_end_date = models.DateTimeField(null=True,blank=True)
     sponsored = models.BooleanField(default=False)
-    sponsor = models.ForeignKey("self",name="sponsor",on_delete=models.RESTRICT,null=True)
+    sponsor = models.ForeignKey(ArepUser,name="sponsor",on_delete=models.RESTRICT,null=True,blank=True)
     status = models.CharField(max_length=10,choices=MemberStatus.choices,default=MemberStatus.NON_ACTIVE)
     function = models.CharField(max_length=100,null=True)
     roles = models.CharField(max_length=100,null=True)
@@ -124,7 +124,7 @@ class Member (models.Model):
     grade = models.CharField(max_length=20,choices=Grade.choices,default=Grade.NONE)
     marital_status = models.CharField(max_length=10,choices=MaritalStatus.choices,default=MaritalStatus.UNKNOWN)
     child_count = models.IntegerField(default=0)
-    contact = models.OneToOneField(Contact,null=True,on_delete=models.RESTRICT)
+    contact = models.OneToOneField(Contact,null=True,blank=True,on_delete=models.RESTRICT)
     def __str__(self):
         return self.first_name + " | " + self.name + " | " + self.postname
 

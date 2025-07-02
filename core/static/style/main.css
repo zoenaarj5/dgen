@@ -1,9 +1,36 @@
+body{
+    background:#236;
+    color:#FEA;
+}
+a{
+    color:#AFF;
+}a:hover{
+    color:green;
+}a:visited{
+    color:#AFF;
+}
+#main-menu:{
+    background-color:black;
+    color:lightgray;
+}
+.main-menu-item:{
+    display:inline;
+    margin-left:1em;
+    text-transform: capitalize;
+}
 header{
     height:6em;
 }header>div{
     height:100%;
 }header>div img{
     height:100%;
+    width:100%;
+}footer{
+    background-color: rgba(34,34,34,.8);
+    position:fixed;
+    bottom:0%;
+    display:block;
+    text-align: center;
     width:100%;
 }
 

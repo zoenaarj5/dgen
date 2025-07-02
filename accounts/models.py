@@ -23,6 +23,7 @@ class ArepUser(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(max_length=15,unique=True,null=True,blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    password = models.CharField(null=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

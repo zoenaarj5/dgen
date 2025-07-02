@@ -4,6 +4,7 @@ from accounts.forms import ArepUserCreationForm
 from .forms import MemberForm, ContactForm, FederationForm, BranchForm
 from django.db import transaction
 from membership.models import Branch, Member, Country, Federation
+from datetime import datetime
 
 def index(request):
     title = "AREP, notre pilier"
@@ -74,8 +75,9 @@ def addMember(request):
                 member = member_form.save()
                 member.user=user
                 member.contact=contact
+                member.registration_start_date = datetime.now()
                 member.save()
-            return redirect("membership/add-member-success")
+            return redirect(f"/membership/add-member-success/{member.id}")
     else:
         member_form = MemberForm()
         contact_form = ContactForm()
@@ -91,7 +93,8 @@ def addMember(request):
 
 def addMemberSuccess(request,member_id):
     newMember = get_object_or_404(Member,id=member_id)
-    return render("membership/add-member-success",{
+    return render(request, "membership/add-member-success.html",{
+        "title":f"Le membre {newMember.first_name} {newMember.name} est bien enregistré.",
         "member":newMember
     })
 
