@@ -3,7 +3,7 @@ from .models import Member, Contact, Federation, Branch, Country
 from accounts.models import ArepUser 
 class ContactForm(forms.ModelForm):
     street_name = forms.CharField(label="Nom de la rue")
-    street_number = forms.CharField(label="Numéro")
+    street_nr = forms.CharField(label="Numéro")
     street_box = forms.CharField(label="Boîte")
     zip_code = forms.CharField(label="Code postal")
     mobile_nr_1 = forms.CharField(label="Nr GSM (1)")
@@ -22,12 +22,6 @@ class ContactForm(forms.ModelForm):
         labels={
             "country":"Pays"
         }
-        widgets = {
-            "country": forms.Select(attrs={"class":"form-select"})
-        }
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args,**kwargs)
-        self.fields["category"].queryset=Country.objects.all
 
 class ArepUserForm(forms.ModelForm):
     email = forms.EmailField(required=False,label="Email")

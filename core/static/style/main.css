@@ -70,4 +70,23 @@ table th,table td{
     padding: .5em .5em .5em .5em;
 }.sub-menu li:hover{
     background-color: rgba(0,0,0,1);
+}.form-table{
+    width:100%;
+}.form-table, .form-table tr, .form-table td{
+    border:none !important;
+}.form-table h4{
+    color:#FEA;
+}.form-table label{
+        color:#EEE;
+}.form-table tr>td:first-child{
+    width:25%;
+}.form-table tr>td:nth-child(2){
+    width:50%;
+}.form-table input, .form-table select{
+    margin-left:25%;
+    width:50%;
+}form input, form select, form select option{
+    background-color:black;
+    color:#FEA;
+    border-color: #FEA;
 }
