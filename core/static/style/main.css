@@ -71,7 +71,8 @@ table th,table td{
 }.sub-menu li:hover{
     background-color: rgba(0,0,0,1);
 }.form-table{
-    width:100%;
+    margin-left:25%;
+    width:50%;
 }.form-table, .form-table tr, .form-table td{
     border:none !important;
 }.form-table h4{
@@ -82,9 +83,8 @@ table th,table td{
     width:25%;
 }.form-table tr>td:nth-child(2){
     width:50%;
-}.form-table input, .form-table select{
-    margin-left:25%;
-    width:50%;
+}.form-table td>label,.form-table td>input, .form-table td>select{
+    width:100%;
 }form input, form select, form select option{
     background-color:black;
     color:#FEA;

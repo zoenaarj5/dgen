@@ -5,7 +5,7 @@ class ArepUserCreationForm(forms.ModelForm):
     email_conf = forms.EmailField(required=False,label="Confirmer l'email")
     phone_number = forms.CharField(required=False,label="Tél.")
     phone_number_conf = forms.CharField(required=False,label="Confirmer Tél.")
-    password = forms.CharField(label="mot de passe",widget = forms.PasswordInput)
+    password = forms.CharField(label="Mot de passe",widget = forms.PasswordInput)
     password_conf = forms.CharField(label="Confirmer mot de passe",widget=forms.PasswordInput)
     class Meta:
         model = ArepUser

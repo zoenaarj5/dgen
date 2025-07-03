@@ -22,7 +22,7 @@ class ContactForm(forms.ModelForm):
         labels={
             "country":"Pays"
         }
-
+'''
 class ArepUserForm(forms.ModelForm):
     email = forms.EmailField(required=False,label="Email")
     email_conf = forms.EmailField(required=False,label="Confirmer email")
@@ -36,7 +36,7 @@ class ArepUserForm(forms.ModelForm):
             "email","email_conf","phone_number","phone_number_conf",
             "password","password_conf"
         ]
-
+'''
 class MemberForm(forms.ModelForm):
     class Meta:
         model = Member
