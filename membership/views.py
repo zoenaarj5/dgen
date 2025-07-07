@@ -77,7 +77,7 @@ def addMember(request):
                 member.contact=contact
                 member.registration_start_date = datetime.now()
                 member.save()
-            return redirect(f"/membership/add-member-success/{member.id}")
+                return redirect(f"/membership/add-member-success/{member.id}")
     else:
         member_form = MemberForm()
         contact_form = ContactForm()

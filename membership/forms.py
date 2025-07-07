@@ -1,5 +1,5 @@
 from django import forms
-from .models import Member, Contact, Federation, Branch, Country
+from .models import Member, Contact, Federation, Branch, Country,MemberCategory,MemberStatus,MaritalStatus,MemberTitle,Grade,Gender
 from accounts.models import ArepUser 
 class ContactForm(forms.ModelForm):
     street_name = forms.CharField(label="Nom de la rue")
@@ -11,7 +11,8 @@ class ContactForm(forms.ModelForm):
     fixed_nr_1 = forms.CharField(label="Nr tél. fixe")
     email_1 = forms.EmailField(label="Email (1)")
     email_2 = forms.EmailField(label="Email (2)")
-    city = forms.CharField(label="Localité")
+    city = forms.CharField(label="Localité"),
+
     class Meta:
         model = Contact
         fields = [
@@ -22,31 +23,62 @@ class ContactForm(forms.ModelForm):
         labels={
             "country":"Pays"
         }
-'''
-class ArepUserForm(forms.ModelForm):
-    email = forms.EmailField(required=False,label="Email")
-    email_conf = forms.EmailField(required=False,label="Confirmer email")
-    phone_number = forms.CharField(required=False,max_length=15,label="Tél.")
-    phone_number_conf = forms.CharField(required=False,max_length=15,label="Confirmer tél.")
-    password = forms.CharField(widget=forms.PasswordInput, label = "Mot de passe")
-    password_conf = forms.CharField(widget=forms.PasswordInput,label="Confirmer mot de passe") 
-    class Meta:
-        model = ArepUser
-        fields = [
-            "email","email_conf","phone_number","phone_number_conf",
-            "password","password_conf"
-        ]
-'''
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+        self.fields["country"].label="Pays"
+        self.fields["country"].queryset = Country.objects.order_by("name")
+
 class MemberForm(forms.ModelForm):
+    title = forms.ChoiceField(
+        choices=MemberTitle.choices,
+        initial=MemberTitle.UNKNOWN,
+        widget=forms.Select(),
+    )
+    name=forms.CharField(label="Nom")
+    postname=forms.CharField(required=False,label="Postnom")
+    first_name=forms.CharField(label="Prénom")
+    sex=forms.ChoiceField(
+        choices = Gender.choices,
+        initial = Gender.UNKNOWN,
+        widget=forms.Select(attrs={"class":"form-control"}),
+        label="Sexe"
+    )
+    sponsored=forms.CheckboxInput()
+    status=forms.ChoiceField(
+        choices=MemberStatus.choices,
+        initial=MemberStatus.NON_ACTIVE,
+        label="Statut"
+    )
+    function=forms.CharField(label="Fonction")
+    roles=forms.CharField(label="Rôles")
+    category=forms.ChoiceField(
+            choices=MemberCategory.choices,
+            initial=MemberCategory.ORDINARY,
+            widget=forms.Select(attrs={"class":"form-control"}),
+            label="Catégorie"
+    )
+    profession=forms.CharField(label="Profession")
+    grade=forms.ChoiceField(
+        choices = Grade.choices,
+        initial = Grade.NONE,
+        widget=forms.Select(attrs={"class":"form-control"}),
+        label = "Diplôme"
+    )
+    marital_status=forms.ChoiceField(
+        choices = MaritalStatus.choices,
+        initial = MaritalStatus.UNKNOWN,
+        widget=forms.Select(attrs={"class":"form-control"}),
+        label="Statut marital"
+    )
+    child_count=forms.NumberInput()
     class Meta:
         model = Member
-#        fields = ["email","name","postname","first_name","sex","birthdate","registration_start_date","registration_end_date","sponsored","function","category","profession","marital_status","child_count","branch_id","grade_id","sponsor_id","status"]
         fields=[
-            "branch","name","postname","first_name","sex","sponsored","sponsor","status","function","roles",
+            "branch","title","name","postname","first_name","sex","sponsored","sponsor","status","function","roles",
             "category","profession","grade","marital_status",
             "child_count"
         ]
-
+        
 class BranchForm(forms.ModelForm):
     class Meta:
         model = Branch

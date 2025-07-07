@@ -3,16 +3,17 @@
     {% block content %}
     <div><a href="/membership/add-member">Ajouter un membre</a></div>
     <table class="table table-dark">
-        <tr><th scope="col">Noms</th><th scope="col">Fédération</th><th scope="col">Branche</th><th scope="col">Sexe</th><th scope="col">Statut marital</th><th scope="col">Statut membre</th><th scope="col">Catégorie</th></tr>
+        <tr><th scope="col">Titre</th><th scope="col">Noms</th><th scope="col">Fédération</th><th scope="col">Branche</th><th scope="col">Sexe</th><th scope="col">Statut marital</th><th scope="col">Statut membre</th><th scope="col">Catégorie</th></tr>
         {% for member in memberz %}
         <tr>
-            <th scope="row"><strong>{{member.first_name}} {{member.name}} {{member.postname}}</strong></th>
+            <td>{{member.get_title_display}}</td>
+            <td>{{member.first_name}} <strong>{{member.name | upper}}</strong> {{member.postname | upper}}</td>
             <td>{{member.branch.federation.name}}</td>
             <td>{{member.branch.name}}</td>
-            <td>{{member.sex}}</td>
-            <td>{{member.marital_status}}</td>
-            <td>{{member.status}}</td>
-            <td>{{member.category}}</td>
+            <td>{{member.get_sex_display}}</td>
+            <td>{{member.get_marital_status_display}}</td>
+            <td>{{member.get_status_display}}</td>
+            <td>{{member.get_category_display}}</td>
         </tr>
         {% endfor %}
     </table>

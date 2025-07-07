@@ -71,8 +71,8 @@ table th,table td{
 }.sub-menu li:hover{
     background-color: rgba(0,0,0,1);
 }.form-table{
-    margin-left:25%;
-    width:50%;
+    margin-left:10%;
+    width:80%;
 }.form-table, .form-table tr, .form-table td{
     border:none !important;
 }.form-table h4{

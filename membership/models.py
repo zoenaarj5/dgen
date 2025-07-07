@@ -5,14 +5,14 @@ from datetime import datetime
 class Gender(models.TextChoices):
     MALE = "M", "Homme"
     FEMALE = "F", "Femme"
-    UNKNOWN = "U", "Inconnu"
+    UNKNOWN = "U", "<Inconnu>"
 
 class MaritalStatus(models.TextChoices):
     SINGLE = "S", "Célibataire"
     MARRIED = "M", "Marié(e)"
     COHABITANT = "C", "Cohabitant"
     WIDOW = "W", "Veuf(ve)"
-    UNKNOWN = "U", "Inconnu"
+    UNKNOWN = "U", "<Inconnu>"
 
 class MemberCategory (models.TextChoices):
     HONOR = "H", "Membre d'honneur"
@@ -62,12 +62,13 @@ class PersonType (models.Model):
     def __str__(self):
         return self.code + " " + self.name
 
-class MemberTitle (models.Model):
-    code = models.CharField(max_length=5)
-    name = models.CharField(max_length=50)
-    description = models.TextField(max_length=150)
-    def __str__(self):
-        return self.code + " " + self.name
+class MemberTitle (models.TextChoices):
+    MISTER=     "MR","Mr"
+    MISTRESS=   "MRS","Mme"
+    MISS=       "MS","Melle"
+    ESQUIRE=    "ESQ","Me"
+    DOCTOR=     "DR","Dr"
+    UNKNOWN =   "U", "<Pas de titre>"
     
 class MemberStatus (models.TextChoices):
     ACTIVE =        "AC","Actif"
@@ -105,6 +106,7 @@ class Contact (models.Model):
         return self.id + " " + self.mobile_nr_1 + " " + self.email_1
 
 class Member (models.Model):
+    title = models.CharField(max_length=10,choices=MemberTitle.choices,default=MemberTitle.UNKNOWN)
     user = models.ForeignKey(ArepUser,null=True,related_name="members", on_delete=models.RESTRICT)
     branch = models.ForeignKey(Branch,on_delete=models.RESTRICT,null=True,related_name="members")
     name = models.CharField(max_length=100)     

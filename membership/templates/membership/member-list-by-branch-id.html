@@ -9,9 +9,9 @@
             <th scope="row"><strong>{{member.first_name}} {{member.name}} {{member.postname}}</strong></th>
             <td>{{member.branch.federation.name}}</td>
             <td>{{member.branch.name}}</td>
-            <td>{{member.marital_status}}</td>
-            <td>{{member.status.name}}</td>
-            <td>{{member.category}}</td>
+            <td>{{member.get_marital_status_display}}</td>
+            <td>{{member.get_status_display}}</td>
+            <td>{{member.get_category_display}}</td>
         </tr>
         {% empty %}
         <tr><td colspan="6">La branche {{branch.name}} ne comporte pas de membres.</td></tr>
