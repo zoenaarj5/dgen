@@ -1,7 +1,15 @@
 {% extends "membership/master.html" %}
+{% load static %}
     {% block title %}<h3>{{title}}</h3>{% endblock %}
     {% block content %}
-    <div>
-        <div>Ceci est la page d'accueil pour les membres.</div>
+    <div class="home-block">
+        <div class="home-picture-block"><img src="{% static 'img/sapman.jpg' %}" alt=""></div>  
+        <div class = "home-presentation-block">
+            <ul>
+                <li><a href="{% url 'addMember' %}">Adhérez au parti en ligne avec votre téléphone portable</a>, même sans adresse mail</li>
+                <li>Soutenez-nous: achetez nos produits (casquettes, drapeaux)</li>
+                <li>Restez au courant des informations liées au parti</li>
+                <li>Demandez à être représentant du parti dans votre région</li>
+            </ul></div>
     </div>
     {% endblock %}

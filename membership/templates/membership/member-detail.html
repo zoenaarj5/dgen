@@ -1,0 +1,88 @@
+{% extends "membership/master.html" %}
+{% load static %}
+    {% block title %}<h3>{{title}}</h3>{% endblock %}
+    {% block content %}
+    <table>
+        <tr>
+            <td colspan="2"><h3>Infos de connexion</h3></td>
+        </tr>
+        <tr>
+            <th>Adresse email</th>
+            <td>{{member.user.email}}</td>
+        </tr>
+        <tr>
+            <th>Tél.</th>
+            <td>{{member.user.phone_number}}</td>
+        </tr>
+        <tr>
+            <td colspan="2"><h3>Infos de connexion</h3></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{member.email}}</td>
+        </tr>
+        <tr>
+            <th>Tél</th>
+            <td>{{member.phone_number}}</td>
+        </tr>
+        <tr>
+            <th>Titre</th>
+            <td>{{member.get_title_display}}</td>
+        </tr>
+        <tr>
+            <th>Prénom</th>
+            <td>{{member.first_name}}</td>
+        </tr>
+        <tr>
+            <th>Nom</th>
+            <td>{{member.name}}</td>
+        </tr>
+        <tr>
+            <th>Postnom</th>
+            <td>{{member.postname}}</td>
+        </tr>
+        <tr>
+            <th>Fédération</th>
+            <td>{{member.branch.federation.name}}</td>
+        </tr>
+        <tr>
+            <th>Branche</th>
+            <td>{{member.branch.name}}</td>
+        </tr>
+        <tr>
+            <th>Sexe</th>
+            <td>{{member.get_sex_display}}</td>
+        </tr>
+        <tr>
+            <th>Statut marital</th>
+            <td>{{member.get_marital_status_display}}</td>
+        </tr>
+        <tr>
+            <th>Statut membre</th>
+            <td>{{member.get_status_display}}</td>
+        </tr>
+        <tr>
+            <th>Cagorie</th>
+            <td>{{member.get_category_display}}</td>
+        </tr>
+        <tr>
+            <th>Profession</th>
+            <td>{{member.profession}}</td>
+        </tr>
+        <tr>
+            <th>Diplôme</th>
+            <td>{{member.get_grade_display}}</td>
+        </tr>
+        <tr>
+            <th>Nombre d'enfants</th>
+            <td>{{member.child_count}}</td>
+        </tr>
+        <tr>
+            <th rowspan="2">Adresse</th>
+            <td>{{member.contact.street_name}}&nbsp; {{member.contact.street_nr}}&nbsp;{{member.contact.street_box}}</td>
+        </tr>
+        <tr>
+            <td>{{member.contact.zip_code}}&nbsp; {{member.contact.city}}</td>
+        </tr>
+    </table>
+    {% endblock %}

@@ -89,4 +89,25 @@ table th,table td{
     background-color:black;
     color:#FEA;
     border-color: #FEA;
+}.home-block{
+    display:flex;
+    width:100%;
+}.home-block>.home-picture-block{
+    margin-left:10%;
+    width:30%;
+}.home-block>.home-picture-block>img{
+    height:100%;
+    width:100%;
+}.home-block>.home-presentation-block{
+    margin-left:5%;
+    width:60%;
+}.home-block>.home-presentation-block>ul>li{
+    list-style-type:none;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size:1.5em;
+    background-color:rgba(255,255,255,.4);
+    margin-top:.5em;
+    padding:1em;
+}.home-block>.home-presentation-block>ul>li:hover{
+    background-color:rgba(255,255,255,.2)
 }

@@ -21,6 +21,13 @@ def listMembers(request):
         'memberz':memberList
     })
 
+def memberDetail(request,member_id):
+    member = get_object_or_404(Member,id=member_id)
+    return render(request,"membership/member-detail.html",{
+        "title":f"Données membre: {member.first_name} {member.name} {member.postname}",
+        "member":member
+    })
+
 def listCountries(request):
     listTitle = "Country list"
     countryList = Country.objects.all
