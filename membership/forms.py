@@ -35,7 +35,7 @@ class MemberForm(forms.ModelForm):
         widget=forms.Select(),
     )
     name=forms.CharField(label="Nom")
-    postname=forms.CharField(required=False,label="Postnom")
+    postname=forms.CharField(label="Postnom")
     first_name=forms.CharField(label="Prénom")
     sex=forms.ChoiceField(
         choices = Gender.choices,

@@ -26,20 +26,20 @@ class Country(models.Model):
     
 class Permission (models.Model):
     name = models.CharField(max_length=100)
-    description = models.TextField(max_length=150)
+    description = models.TextField(max_length=150,blank=True)
     def __str__(self):
         return self.name
 
 class Role(models.Model):
     name = models.CharField(max_length=100)
-    description = models.TextField(max_length=150)
+    description = models.TextField(max_length=150,blank=True)
     permissions = models.ManyToManyField(Permission,related_name="permissions")
     def __str__(self):
         return self.name
 
 class Federation (models.Model):
     name = models.CharField(max_length=100,unique=True)
-    description = models.TextField(max_length=500,null=True)
+    description = models.TextField(max_length=500,blank=True)
     country = models.ForeignKey(Country,on_delete=models.RESTRICT,null=True)
     responsible = models.CharField(max_length=100,null=True)
     def __str__(self):
@@ -47,7 +47,7 @@ class Federation (models.Model):
 
 class Branch (models.Model):
     name = models.CharField(max_length=100)
-    description = models.TextField(max_length=200)
+    description = models.TextField(max_length=200,blank=True)
     federation = models.ForeignKey(Federation,on_delete=models.RESTRICT,related_name="branches",null=True)
     class Meta:
         constraints = [
@@ -91,17 +91,17 @@ class Grade (models.TextChoices):
     
 
 class Contact (models.Model):
-    street_name = models.CharField(max_length=150)
-    street_nr = models.CharField(max_length=10)
-    street_box = models.CharField(max_length=10)
-    zip_code = models.CharField(max_length=10)
+    street_name = models.CharField(max_length=150,blank=True)
+    street_nr = models.CharField(max_length=10,blank=True)
+    street_box = models.CharField(max_length=10,blank=True)
+    zip_code = models.CharField(max_length=10,blank=True)
     city = models.CharField(max_length=100)
     country = models.ForeignKey(Country,null=True,on_delete=models.RESTRICT)
-    mobile_nr_1 = models.CharField(max_length=20)
-    mobile_nr_2 = models.CharField(max_length=20)
-    fixed_nr_1 = models.CharField(max_length=20)
-    email_1 = models.EmailField(max_length=50)
-    email_2 = models.EmailField(max_length=50)
+    mobile_nr_1 = models.CharField(max_length=20,blank=True)
+    mobile_nr_2 = models.CharField(max_length=20,blank=True)
+    fixed_nr_1 = models.CharField(max_length=20,blank=True)
+    email_1 = models.EmailField(max_length=50,blank=True)
+    email_2 = models.EmailField(max_length=50,blank=True)
     def __str__(self):
         return self.id + " " + self.mobile_nr_1 + " " + self.email_1
 
@@ -110,8 +110,8 @@ class Member (models.Model):
     user = models.ForeignKey(ArepUser,null=True,related_name="members", on_delete=models.RESTRICT)
     branch = models.ForeignKey(Branch,on_delete=models.RESTRICT,null=True,related_name="members")
     name = models.CharField(max_length=100)     
-    postname = models.CharField(max_length=100)
-    first_name = models.CharField(max_length=100)
+    postname = models.CharField(max_length=100,blank=True)
+    first_name = models.CharField(max_length=100,blank=True)
     sex = models.CharField(max_length=10,choices = Gender.choices,default=Gender.UNKNOWN)
     birthdate = models.DateField(null=True)
     registration_start_date = models.DateTimeField(null=True,blank=True,default=datetime.now)
@@ -119,10 +119,10 @@ class Member (models.Model):
     sponsored = models.BooleanField(default=False)
     sponsor = models.ForeignKey(ArepUser,name="sponsor",on_delete=models.RESTRICT,null=True,blank=True)
     status = models.CharField(max_length=10,choices=MemberStatus.choices,default=MemberStatus.NON_ACTIVE)
-    function = models.CharField(max_length=100,null=True)
-    roles = models.CharField(max_length=100,null=True)
+    function = models.CharField(max_length=100,null=True,blank=True)
+    roles = models.CharField(max_length=100,null=True,blank=True)
     category = models.CharField(max_length=10,choices=MemberCategory.choices,default=MemberCategory.ORDINARY)
-    profession = models.CharField(max_length=50,null=True)
+    profession = models.CharField(max_length=50,null=True,blank=True)
     grade = models.CharField(max_length=20,choices=Grade.choices,default=Grade.NONE)
     marital_status = models.CharField(max_length=10,choices=MaritalStatus.choices,default=MaritalStatus.UNKNOWN)
     child_count = models.IntegerField(default=0)
