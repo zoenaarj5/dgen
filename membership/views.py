@@ -5,6 +5,8 @@ from .forms import MemberForm, ContactForm, FederationForm, BranchForm
 from django.db import transaction
 from membership.models import Branch, Member, Country, Federation
 from datetime import datetime
+from collections import Counter
+import json
 
 def index(request):
     title = "AREP, notre pilier"
@@ -19,6 +21,55 @@ def listMembers(request):
         'title':listTitle,
         'user':request.user,
         'memberz':memberList
+    })
+
+def editMember(request,member_id):
+    member = get_object_or_404(Member,id=member_id)
+    if request.method == "POST":
+        member_form = MemberForm(request.POST,instance=member)
+        contact_form = ContactForm(request.POST,instance=member.contact)
+        if user_form.is_valid() and member_form.is_valid() and contact_form.is_valid():
+            with transaction.atomic():
+                contact = contact_form.save()
+                contact.save()
+                member = member_form.save()
+                member.contact=contact
+                member.last_change_date = datetime.now()
+                member.save()
+                return redirect(f"/membership/member-detail/{member.id}")
+    else:
+        member_form = MemberForm()
+        contact_form = ContactForm()
+        user_form = ArepUserCreationForm()
+
+def memberCharts(request):
+    pageTitle = "Statistiques des membres"
+    memberz = Member.objects.all()
+    age_data = [(0 if member.age is None else member.age) for member in memberz]
+    federation_data = [member.branch.federation.name for member in memberz]
+    federation_counter = Counter(federation_data)
+    sex_data = [member.sex for member in memberz]
+    sex_counter = Counter(sex_data)
+    context = {
+        "title":pageTitle,
+        "age_data":age_data,
+        "federation_labels":list(federation_counter.keys()),
+        "federation_counts":list(federation_counter.values()),
+        "sex_labels":["M","F","U"],
+        #list(sex_counter.keys()),
+        "sex_counts":[41,200,4],
+        #list(sex_counter.values())
+    }
+    return render(request, "membership/part/member-charts.html",{
+        "title":pageTitle
+    })
+
+def charts(request):
+    pageTitle = "Statistiques"
+    memberChartsPage = memberCharts(request)
+    return render(request,"membership/charts.html",{
+        "title":pageTitle,
+        "included_html":memberChartsPage
     })
 
 def memberDetail(request,member_id):

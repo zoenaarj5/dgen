@@ -3,6 +3,9 @@ from django.urls import path
 from . import views
 urlpatterns = [
     path("",views.index,name="index"),
+    path("charts/",views.charts,name="charts"),
+    path("member-charts/",views.memberCharts,name="memberCharts"),
+    path("edit-member/<int:member_id>",views.editMember,name="editMember"),
     path("federation/<int:federation_id>/add-branch",views.addBranchToFederation,name="addBranchToFederation"),
     path("add-branch-success/<int:branch_id>",views.addBranchSuccess,name="addBranchSuccess"),
     path("add-member/",views.addMember,name="addMember"),

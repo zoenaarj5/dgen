@@ -6,24 +6,32 @@
 <head>
     <meta title="AREP, notre pilier" description="AREP est un des partis politiques les plus en vue en République Démocratique du Congo." keywords="arep, congo, rdc, parti, politique, démocratie, république"></meta>
     {% block mainTitle %}{% endblock %}
-    <!--link rel="stylesheet" href="{% static 'style/main.css' %}"-->
+    <link rel="stylesheet" href="{% static 'style/main-ter.css' %}">
 </head>
-<body class="bg-dark col">
-    <header class="row"><div class="col-sm-3"><a href="/"><img src="{% static 'img/logo_3.png' %}"/></a></div><div class="col-sm-9"><img src="{% static 'img/congo-basin.jpg' %}" alt=""></div></header>
-    <nav id="main-menu-bar">
-        <ul id="main-menu-left">
-            <li class="main-menu-item"><a href="/membership">Membres</a></li>
-            <li class="main-menu-item"><a href="/blog">News</a></li>
-            <li class="main-menu-item"><a href="/shop">Boutique</a></li>
-            <li class="main-menu-item"><a href="/finance">Finances</a></li>
-            <li class="main-menu-item"><a href="/accounts">Gestion des comptes</a></li>
-        </ul>
-        <ul id="main-menu-right"><li><a href="/core/login">Log in</a></li></ul>
-    </nav>
-    <div class="bg-dark text-light">{% block title %}{% endblock %}</div>
-    {% block subMenu %}{% endblock %}
-    {% block content %}{% endblock %}
+<body class="container text-white">
+    <header class="row">
+        <div class="h-100 col-sm-6 col-md-4 col-lg-3"><img class="w-100 h-100" src="{% static 'img/logo_3.png' %}"/></div>
+        <div class="h-100 col-sm-6 col-md-8 col-lg-9"><img class="w-100 h-100" src="{% static 'img/congo-basin.jpg' %}" alt=""/></div>
+    </header>
+    <div id="main-bar" class="row">
+        <nav id="main-menu-bar" class="col-sm-5 col-md-4 col-lg-3 text-center text-uppercase">
+            <ul id="main-menu-left" class="nav navbar-nav">
+                <li class="main-menu-left-item nav-item"><a class="nav-link" href="/membership">Membres</a></li>
+                <li class="main-menu-left-item nav-item"><a class="nav-link" href="/blog">News</a></li>
+                <li class="main-menu-left-item nav-item"><a class="nav-link" href="/shop">Boutique</a></li>
+                <li class="main-menu-left-item nav-item"><a class="nav-link" href="/finance">Finances</a></li>
+                <li class="main-menu-left-item nav-item"><a class="nav-link" href="/accounts">Gestion des comptes</a></li>
+                <li class="main-menu-left-item nav-item"><a class="nav-link" href="/core/login">Se connecter</a></li>
+            </ul>
+            <!--ul id="main-menu-right"><li><a href="/core/login">Log in</a></li></ul-->
+        </nav>
+        <div id="main-content-bar" class="col-sm-7 col-md-8 col-lg-9">
+            <div class="title-block" class="text-light text-center">{% block title %}{% endblock %}</div>
+            <nav class="sub-menu-bar text-uppercase">
+            {% block subMenu %}{% endblock %}
+            </nav>
+            {% block content %}{% endblock %}
+        </div>
+    </div>
     <footer>Page développée par <b>Valentin Kavuna</b> | <a mailto="kacva@yahoo.com">kacva@yahoo.com</a></footer>
-    <style>
-    </style>
 </body>

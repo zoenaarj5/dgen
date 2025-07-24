@@ -1,0 +1,7 @@
+#home-block>#home-presentation-block>#home-presentation-list-group>li{   
+    background-color:#111;
+    color:#EEE;
+    margin:.2em;
+}#home-block>#home-presentation-block>#home-presentation-list-group>li:hover{
+    background-color:#2B2D83;
+}

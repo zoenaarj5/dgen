@@ -2,14 +2,16 @@
 {% load static %}
     {% block title %}<h3>{{title}}</h3>{% endblock %}
     {% block content %}
-    <div class="home-block">
-        <div class="home-picture-block"><img src="{% static 'img/sapman.jpg' %}" alt=""></div>  
-        <div class = "home-presentation-block">
-            <ul>
-                <li><a href="{% url 'addMember' %}">Adhérez au parti en ligne avec votre téléphone portable</a>, même sans adresse mail</li>
-                <li>Soutenez-nous: achetez nos produits (casquettes, drapeaux)</li>
-                <li>Restez au courant des informations liées au parti</li>
-                <li>Demandez à être représentant du parti dans votre région</li>
-            </ul></div>
+    <link rel="stylesheet" href="{% static 'style/membership/home.css' %}">
+    <div id="home-block" class="row">
+        <div id="home-picture-block" class="col-sm-6 col-md-5 col-lg-4 col-xl-3"><img src="{% static 'img/sapman.jpg' %}" alt="" class="w-100"></div>  
+        <div id="home-presentation-block" class="col-sm-6 col-md-7 col-lg-8 col-xl-9">
+            <ul id="home-presentation-list-group" class="list-group">
+                <li class="list-group-item"><a href="{% url 'addMember' %}">Adhérez au parti en ligne avec votre téléphone portable</a>, même sans adresse mail</li>
+                <li class="list-group-item"><a href="/shop/">Soutenez-nous: achetez nos produits</a> (casquettes, drapeaux...)</li>
+                <li class="list-group-item"><a href="/blog/">Restez au courant des informations liées au parti</a></li>
+                <li class="list-group-item">Demandez à être représentant du parti dans votre région</li>
+            </ul>
+        </div>
     </div>
     {% endblock %}

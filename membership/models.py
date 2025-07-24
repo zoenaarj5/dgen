@@ -1,6 +1,6 @@
 from django.db import models
 from accounts.models import ArepUser
-from datetime import datetime
+from datetime import date,datetime
 
 class Gender(models.TextChoices):
     MALE = "M", "Homme"
@@ -116,6 +116,7 @@ class Member (models.Model):
     birthdate = models.DateField(null=True)
     registration_start_date = models.DateTimeField(null=True,blank=True,default=datetime.now)
     registration_end_date = models.DateTimeField(null=True,blank=True)
+    last_change_date = models.DateTimeField(null=True,blank=True,default=datetime.now)
     sponsored = models.BooleanField(default=False)
     sponsor = models.ForeignKey(ArepUser,name="sponsor",on_delete=models.RESTRICT,null=True,blank=True)
     status = models.CharField(max_length=10,choices=MemberStatus.choices,default=MemberStatus.NON_ACTIVE)
@@ -129,4 +130,11 @@ class Member (models.Model):
     contact = models.OneToOneField(Contact,null=True,blank=True,on_delete=models.RESTRICT)
     def __str__(self):
         return self.first_name + " | " + self.name + " | " + self.postname
+    @property
+    def age(self):
+        today=date.today()
+        if self.birthdate is None:
+            return None
+        else:
+            return today.year-self.birthdate.year - ((today.month,today.day) < (self.birthdate.month,self.birthdate.day))
 

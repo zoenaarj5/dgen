@@ -3,17 +3,19 @@
     {% block content %}
     <div><a href="/membership/add-member">Ajouter un membre</a></div>
     <table class="table table-dark">
-        <tr><th scope="col">Titre</th><th scope="col">Noms</th><th scope="col">Fédération</th><th scope="col">Branche</th><th scope="col">Sexe</th><th scope="col">Statut marital</th><th scope="col">Statut membre</th><th scope="col">Catégorie</th></tr>
+        <tr><th scope="col">Titre</th><th scope="col">Noms</th><th scope="col">Fédération</th><th scope="col">Branche</th><th scope="col">Age</th><th scope="col">Sexe</th><th scope="col">Statut marital</th><th scope="col">Statut membre</th><th scope="col">Catégorie</th><th></th></tr>
         {% for member in memberz %}
         <tr>
             <td>{{member.get_title_display}}</td>
             <td>{{member.first_name}} <strong>{{member.name | upper}}</strong> {{member.postname | upper}}</td>
             <td>{{member.branch.federation.name}}</td>
             <td>{{member.branch.name}}</td>
+            <td>{{member.age}}</td>
             <td>{{member.get_sex_display}}</td>
             <td>{{member.get_marital_status_display}}</td>
             <td>{{member.get_status_display}}</td>
             <td>{{member.get_category_display}}</td>
+            <td><a href="/membership/edit-member/{{member.id}}">Modifier</a></td>
         </tr>
         {% endfor %}
     </table>
