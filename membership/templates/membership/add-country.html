@@ -1,0 +1,10 @@
+{% extends "membership/master.html" %}
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{country_form.as_p}}
+    <button type="submit">Créer</button>
+</form>
+
+{% endblock %}

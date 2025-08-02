@@ -3,7 +3,7 @@
    {% block content %}
     <div><a href="/membership/federations/{{branch.federation_id}}/branches/">&lt;&lt;&nbsp;Retour</a></div>
     <table class="table table-dark">
-        <tr><th scope="col">Noms</th><th scope="col">Fédération</th><th scope="col">Branche</th><th scope="col">Statut marital</th><th scope="col">Statut membre</th><th scope="col">Catégorie</th><th></th></tr>
+        <tr><th scope="col">Noms</th><th scope="col">Fédération</th><th scope="col">Branche</th><th scope="col">Statut marital</th><th scope="col">Statut membre</th><th scope="col">Catégorie</th><th colspan="2"></th></tr>
         {% for member in memberz %}
         <tr>
             <th scope="row"><strong>{{member.first_name}} {{member.name}} {{member.postname}}</strong></th>
@@ -12,7 +12,8 @@
             <td>{{member.get_marital_status_display}}</td>
             <td>{{member.get_status_display}}</td>
             <td>{{member.get_category_display}}</td>
-            <td><a href="/membership/member-detail/{{member.id}}"></a></td>
+            <td><a href="/membership/member-detail/{{member.id}}">Détail</a></td>
+            <td><a href="/membership/edit-member/{{member.id}}">Modifier</a></td>
         </tr>
         {% empty %}
         <tr><td colspan="6">La branche {{branch.name}} ne comporte pas de membres.</td></tr>

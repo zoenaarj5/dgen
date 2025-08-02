@@ -3,4 +3,21 @@
     {% block title %}<h3>{{title}}</h3>{% endblock %}
     {% block content %}
     <h3>Les news du parti</h3>
+    <div class="row">
+        <div class="col-sm-6 col-md-5 col-lg-4 col-xl-3">
+            <img src="{%static 'img/blog/microphones.jpg'%}" alt="N.E.W.S." class="w-100"/>
+        </div>
+        <div class="col-sm-6 col-md-7 col-lg-8 col-sm col-md-5 container">
+            {% for article in news %}
+            <div class="row">
+                <h3>{{article.title}}</h3>
+                <div>{{article.author.first_name}} {{ne.author.last_name}}</div>
+                    <div>{{article.publishing_date|date:'d/m/Y'}}</div>
+                <p>{{article.content}}ne</p>
+            </div>
+            <div class="row"><a href="/blog/edit-article/{{article.id}}">Modifier</a></div>
+            {% endfor %}
+        </div>
+        <div><a href="/blog/add-article">Créer un article</a></div>
+    </div>
     {% endblock %}

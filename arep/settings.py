@@ -102,7 +102,8 @@ DATABASES = {
 AUTH_USER_MODEL = 'accounts.ArepUser'
 
 #AUTHENTICATION_BACKENDS = ['core.backends.EmailOrPhoneBackend']
-AUTHENTICATION_BACKENDS = ['accounts.authentication.EmailOrPhoneBackend']
+#AUTHENTICATION_BACKENDS = ['accounts.authentication.EmailOrPhoneBackend']
+AUTHENTICATION_BACKENDS = ['accounts.auth_backends.PhoneEmailBackend']
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

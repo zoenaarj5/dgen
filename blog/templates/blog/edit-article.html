@@ -1,0 +1,26 @@
+{% extends "blog/master.html" %}
+    {% block title %}{{title}}{% endblock %}
+    {% block content %}
+    
+    <form class="form-group" method="post">
+        {% csrf_token %}
+        {% if article_form.non_field_errors %}
+            <div class="errors">
+                {{article_form.non_field_errors}}
+            </div>
+        {% endif %}
+        <fieldset class="vk-fieldset">
+            <legend>Infos article</legend>
+            {% for field in article_form %}
+            <div class="vk-form-line edit-article-vk-form-line">
+                {{field.label_tag}}
+                {{field}}
+                {% if field.errors %}
+                    <div class="errors">{{field.errors}}</div>
+                {% endif %}
+            </div>
+           {% endfor %}
+        </fieldset>
+        <button type="submit">Enregistrer</button>
+    </form>
+    {% endblock %}

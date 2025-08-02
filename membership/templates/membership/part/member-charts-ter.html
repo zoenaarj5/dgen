@@ -1,0 +1,45 @@
+{% extends "membership/master.html" %}
+{% load static %}
+    {% block title %}<h3>{{title}}</h3>{% endblock %}
+    {% block content %}
+
+<h3>{{title}}</h3>
+<h4>Distribution des sexes v3</h4>
+
+<canvas id="sexChart" width="500" height="500"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript">
+    console.log(">>hello");
+    const rawData = JSON.parse('{{sex_counter|safe}}')
+    const myMap = new Map(Object.entries(rawData));
+    for(const [k,v] of myMap){
+        console.log("key = <"+k+">, value = <"+v+">");
+    }
+    console.log("LABELS:");
+    const sexLabels = [...myMap.keys()];
+    for(let l of sexLabels) console.log(l);
+    console.log("bye>>");
+    const sexCounts = [...myMap.values()    ];
+    console.log("COUNTS:");
+    for(let c of sexCounts) console.log(c);
+    new Chart(document.getElementById("sexChart"),{
+        type:"pie",
+        data:{
+            labels: sexLabels,
+            datasets:[{
+                data:sexCounts,
+                backgroundColor:[
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(25, 99, 132, 0.5)',
+                    'rgba(5, 162, 235, 0.5)',
+                    'rgba(25, 206, 86, 0.5)',
+                    'rgba(7, 192, 192, 0.5)'
+                ]
+            }]
+        }
+    });
+</script>
+        {%endblock%}

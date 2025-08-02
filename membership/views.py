@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from accounts.forms import ArepUserCreationForm
-from .forms import MemberForm, ContactForm, FederationForm, BranchForm
+from .forms import CountryForm, MemberForm, ContactForm, FederationForm, BranchForm, MemberEditForm
 from django.db import transaction
 from membership.models import Branch, Member, Country, Federation
 from datetime import datetime
@@ -9,7 +9,7 @@ from collections import Counter
 import json
 
 def index(request):
-    title = "AREP, notre pilier"
+    title = "Nos membres, notre force"
     return render(request,"membership/home.html",{
         "title":title
     })
@@ -26,9 +26,9 @@ def listMembers(request):
 def editMember(request,member_id):
     member = get_object_or_404(Member,id=member_id)
     if request.method == "POST":
-        member_form = MemberForm(request.POST,instance=member)
+        member_form = MemberEditForm(request.POST,instance=member)
         contact_form = ContactForm(request.POST,instance=member.contact)
-        if user_form.is_valid() and member_form.is_valid() and contact_form.is_valid():
+        if member_form.is_valid() and contact_form.is_valid():
             with transaction.atomic():
                 contact = contact_form.save()
                 contact.save()
@@ -36,40 +36,54 @@ def editMember(request,member_id):
                 member.contact=contact
                 member.last_change_date = datetime.now()
                 member.save()
-                return redirect(f"/membership/member-detail/{member.id}")
+                return redirect(f"/membership/edit-member-success/{member.id}")
     else:
-        member_form = MemberForm()
-        contact_form = ContactForm()
-        user_form = ArepUserCreationForm()
+        member_form = MemberEditForm(instance=member)
+        contact_form = ContactForm(instance=member.contact)
+    return render(request,"membership/edit-member.html",{
+        "title":f"Modifier le profil pour le membre \"{member.first_name} {member.name}\"",
+        "member_form":member_form,
+        "contact_form":contact_form
+    })
+
+def editMemberSuccess(request,member_id):
+    member = get_object_or_404(Member,id=member_id)
+    return render(request, "membership/edit-member-success.html/",{
+        "title":f"Le profil du membre {member.first_name} {member.name} a été modifié.",
+        "member":member
+    })
 
 def memberCharts(request):
     pageTitle = "Statistiques des membres"
     memberz = Member.objects.all()
+
     age_data = [(0 if member.age is None else member.age) for member in memberz]
     federation_data = [member.branch.federation.name for member in memberz]
     federation_counter = Counter(federation_data)
-    sex_data = [member.sex for member in memberz]
-    sex_counter = Counter(sex_data)
+    sex_list = [member.sex for member in memberz]
+    sex_counter = Counter(sex_list)
+    sex_data = list(sex_counter.items())
     context = {
+        "members":memberz,
         "title":pageTitle,
         "age_data":age_data,
         "federation_labels":list(federation_counter.keys()),
         "federation_counts":list(federation_counter.values()),
-        "sex_labels":["M","F","U"],
-        #list(sex_counter.keys()),
-        "sex_counts":[41,200,4],
-        #list(sex_counter.values())
+        "sex_data":sex_data,
+        "sex_list":sex_list,
+        "sex_counter":json.dumps(sex_counter),
+        "sex_labels":list(sex_counter.keys()),
+        "sex_counts":list(sex_counter.values())
     }
-    return render(request, "membership/part/member-charts.html",{
-        "title":pageTitle
-    })
+    return render(request, "membership/part/member-charts-bis.html",
+                  context)
 
 def charts(request):
     pageTitle = "Statistiques"
-    memberChartsPage = memberCharts(request)
+    #memberChartsPage = memberCharts(request)
     return render(request,"membership/charts.html",{
         "title":pageTitle,
-        "included_html":memberChartsPage
+     #   "included_html":memberChartsPage
     })
 
 def memberDetail(request,member_id):
@@ -89,7 +103,7 @@ def listCountries(request):
     })
 
 def listFederations(request):
-    listTitle = "Federation list"
+    listTitle = "Liste des fédérations"
     federationList = Federation.objects.all
     return render(request,"membership/federation-list.html",{
         'title':listTitle,
@@ -146,7 +160,7 @@ def addMember(request):
         "title":"Ajout nouveau membre",
         "member_form":member_form,
         "contact_form":contact_form,
-        "user_form" : user_form,
+        "user_form" : user_form
     }) 
 
 def addMemberSuccess(request,member_id):
@@ -181,6 +195,27 @@ def addBranchSuccess(request,branch_id):
         "title":f"La branche \"{newBranch.name}\" de la fédération \"{newBranch.federation.name}\" a été créée avec succès."
     })
 
+def addCountry(request):
+    if request.method == "POST":
+        country_form = CountryForm(request.POST)
+        if(country_form.is_valid()):
+            with transaction.atomic():
+                country = country_form.save()
+                return redirect(f"/membership/add-country-success/{country.code}")
+    else:
+        country_form = CountryForm()
+
+    return render(request,"membership/add-country.html",{
+        "title":"Nouveau pays",
+        "country_form":country_form
+    })
+
+def addCountrySuccess(request,country_code):
+    newCountry = get_object_or_404(Country,code=country_code)
+    return render(request,"membership/add-country-success.html",{
+        "branch":newCountry,
+        "title":f"Le pays \"{newCountry.name}\" a été créée avec succès."
+    })
 def addFederation(request):
     if request.method == "POST":
         federation_form = FederationForm(request.POST)

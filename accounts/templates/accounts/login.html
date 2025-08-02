@@ -4,6 +4,9 @@
     <form method="post">
         {% csrf_token %}
         {{form.as_p}}
+        {% if error %}
+        <div style="color:orange;background-color: black;border:solid 1px white">{{error}}</div>
+        {% endif %}
         <button type="submit">Go</button>
     </form>
     <div><a href="{% url 'register' %}">Je n'ai pas de compte, inscrivez-moi</a></div>

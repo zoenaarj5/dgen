@@ -1,5 +1,5 @@
 body{
-    background-color:#2B2D83;
+/*    background-color:#2B2D83;*/
     background-color:#224;
 }a{
     text-decoration: none;
@@ -31,8 +31,37 @@ body{
     color:#FEA;
 }#main-menu-left > .main-menu-left-item > a:hover{
     color:white;
-}.title-block{
+}/*#main-menu-left > .main-menu-left-item > a > i{
+    color:#EEE;
+}*/.title-block{
     background-color:inherit;
     border-bottom:solid 1px #FEA;
     color:white;
+}.errors{
+    color:orange;
+}.vk-form-line>*:first-child{
+    width:50%;
+}.vk-form-line>*:nth-child(2){
+    color:white;
+    background-color:#2B2D83;
+    background-color: #222;
+    border-radius:.5em;
+    box-shadow:none;
+    padding:.2em;
+    width:50%;
+}.vk-form-line>*:nth-child(3){
+    width:100%;
+}.vk-fieldset{
+    background-color:rgba(0,0,0,.2);
+    border-radius:1em;
+    padding:1.5em;
+    margin-top:1.5em;
+    border: 1px solid #EEE;
+}.vk-chart-box{
+    display: inline-block;
+}.vk-charts{
+    display:inline;
+    border:none;/*solid 1px #FEA;*/
+    height:15em !important;
+    width:auto !important;
 }

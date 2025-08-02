@@ -2,15 +2,15 @@ from django import forms
 from .models import Member, Contact, Federation, Branch, Country,MemberCategory,MemberStatus,MaritalStatus,MemberTitle,Grade,Gender
 from accounts.models import ArepUser 
 class ContactForm(forms.ModelForm):
-    street_name = forms.CharField(label="Nom de la rue")
-    street_nr = forms.CharField(label="Numéro")
-    street_box = forms.CharField(label="Boîte")
-    zip_code = forms.CharField(label="Code postal")
-    mobile_nr_1 = forms.CharField(label="Nr GSM (1)")
-    mobile_nr_2 = forms.CharField(label="Nr GSM (2)")
-    fixed_nr_1 = forms.CharField(label="Nr tél. fixe")
-    email_1 = forms.EmailField(label="Email (1)")
-    email_2 = forms.EmailField(label="Email (2)")
+    street_name = forms.CharField(label="Nom de la rue",required=False)
+    street_nr = forms.CharField(label="Numéro",required=False)
+    street_box = forms.CharField(label="Boîte",required=False)
+    zip_code = forms.CharField(label="Code postal",required=False)
+    mobile_nr_1 = forms.CharField(label="Nr GSM (1)",required=False)
+    mobile_nr_2 = forms.CharField(label="Nr GSM (2)",required=False)
+    fixed_nr_1 = forms.CharField(label="Nr tél. fixe",required=False)
+    email_1 = forms.EmailField(label="Email (1)",required=False)
+    email_2 = forms.EmailField(label="Email (2)",required=False)
     city = forms.CharField(label="Localité"),
 
     class Meta:
@@ -74,7 +74,17 @@ class MemberForm(forms.ModelForm):
     class Meta:
         model = Member
         fields=[
-            "branch","title","name","postname","first_name","sex","sponsored","sponsor","status","function","roles",
+            "branch","title","name","postname","first_name","sex","birthdate","sponsored","sponsor","status","function","roles",
+            "category","profession","grade","marital_status",
+            "child_count"
+        ]
+
+class MemberEditForm(forms.ModelForm):
+   
+    class Meta:
+        model = Member
+        fields=[
+            "branch","title","name","postname","first_name","sex","birthdate","sponsored","sponsor","status","function","roles",
             "category","profession","grade","marital_status",
             "child_count"
         ]
@@ -83,6 +93,11 @@ class BranchForm(forms.ModelForm):
     class Meta:
         model = Branch
         fields = ["name","description"]
+
+class CountryForm(forms.ModelForm):
+    class Meta:
+        model = Country
+        fields = ["code","name"]
 
 class FederationForm(forms.ModelForm):
     class Meta:

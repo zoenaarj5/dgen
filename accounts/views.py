@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout
+from django.contrib.auth import authenticate, login, logout
 from .authentication import ArepUser
-from .forms import ArepUserCreationForm
+from .forms import ArepUserCreationForm,LoginForm
 
 def registerView(request):
     if request.method == "post":
@@ -22,7 +22,22 @@ def index(request):
     })
 
 def loginView(request):
+    form = LoginForm(request.POST or None)
+    error=None
+    if(request.method == "POST"):
+        if(form.is_valid()):
+            username=form.cleaned_data.get("username")
+            pwd=form.cleaned_data.get("password")
+            user = authenticate(request, username=username,password=pwd)
+
+            if user is not None:
+                login(request,user)
+                return redirect("home")
+            else:
+                error = "Utilisateur non valide."
     return render(request,"accounts/login.html",{
+        "form":form,
+        "error":error,
         "title":"Identification"
     })
 

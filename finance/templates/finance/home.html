@@ -1,8 +1,10 @@
 {% extends "finance/master.html" %}
     {% block title %}<h3>{{title}}</h3>{% endblock %}
     {% block content %}
-    <div class="text-white">
-        <div>Bla bla bla bla bla bla</div>
+    {% load static %}
+    <div class="text-white w-120 row">
+        <div class="col-sm-0 col-md-5 col-lg-4"><img class="w-100" src="{%static 'img/finance/finance-person.jpg'%}" alt=""></div>
+        <div class="col-sm-12 col-md-7 col-lg-8">Bla bla bla bla bla bla</div>
     </div>
     <div class="text-white">More statistics</div>
     {% endblock %}

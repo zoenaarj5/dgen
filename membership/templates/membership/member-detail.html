@@ -2,87 +2,92 @@
 {% load static %}
     {% block title %}<h3>{{title}}</h3>{% endblock %}
     {% block content %}
-    <table>
+    <p><a href="/membership/edit-member/{{member.id}}">Modifier le profil</a></p>
+    <table class="table-bordered bg-dark">
         <tr>
-            <td colspan="2"><h3>Infos de connexion</h3></td>
+            <td colspan="2" class="p-2"><h3>Infos de connexion</h3></td>
         </tr>
         <tr>
-            <th>Adresse email</th>
-            <td>{{member.user.email}}</td>
+            <th class="text-end p-2">Adresse email</th>
+            <td class="p-2">{{member.user.email}}</td>
         </tr>
         <tr>
-            <th>Tél.</th>
-            <td>{{member.user.phone_number}}</td>
+            <th class="text-end p-2">Tél.</th>
+            <td class="p-2">{{member.user.phone_number}}</td>
         </tr>
         <tr>
-            <td colspan="2"><h3>Infos de connexion</h3></td>
+            <td colspan="2" class="p-2"><h3>Infos membre</h3></td>
         </tr>
         <tr>
-            <th>Email</th>
-            <td>{{member.email}}</td>
+            <th class="text-end p-2">Dernier changement</th>
+            <td class="p-2">{{member.last_change_date | date:'d/m/Y'}}</td>
         </tr>
         <tr>
-            <th>Tél</th>
-            <td>{{member.phone_number}}</td>
+            <th class="text-end p-2">Email</th>
+            <td class="p-2">{{member.email}}</td>
         </tr>
         <tr>
-            <th>Titre</th>
-            <td>{{member.get_title_display}}</td>
+            <th class="text-end p-2">Tél</th>
+            <td class="p-2">{{member.phone_number}}</td>
         </tr>
         <tr>
-            <th>Prénom</th>
-            <td>{{member.first_name}}</td>
+            <th class="text-end p-2">Titre</th>
+            <td class="p-2">{{member.get_title_display}}</td>
         </tr>
         <tr>
-            <th>Nom</th>
-            <td>{{member.name}}</td>
+            <th class="text-end p-2">Prénom</th>
+            <td class="p-2">{{member.first_name}}</td>
         </tr>
         <tr>
-            <th>Postnom</th>
-            <td>{{member.postname}}</td>
+            <th class="text-end p-2">Nom</th>
+            <td class="p-2">{{member.name}}</td>
         </tr>
         <tr>
-            <th>Fédération</th>
-            <td>{{member.branch.federation.name}}</td>
+            <th class="text-end p-2">Postnom</th>
+            <td class="p-2">{{member.postname}}</td>
         </tr>
         <tr>
-            <th>Branche</th>
-            <td>{{member.branch.name}}</td>
+            <th class="text-end p-2">Fédération</th>
+            <td class="p-2">{{member.branch.federation.name}}</td>
         </tr>
         <tr>
-            <th>Sexe</th>
-            <td>{{member.get_sex_display}}</td>
+            <th class="text-end p-2">Branche</th>
+            <td class="p-2">{{member.branch.name}}</td>
         </tr>
         <tr>
-            <th>Statut marital</th>
-            <td>{{member.get_marital_status_display}}</td>
+            <th class="text-end p-2">Sexe</th>
+            <td class="p-2">{{member.get_sex_display}}</td>
         </tr>
         <tr>
-            <th>Statut membre</th>
-            <td>{{member.get_status_display}}</td>
+            <th class="text-end p-2">Statut marital</th>
+            <td class="p-2">{{member.get_marital_status_display}}</td>
         </tr>
         <tr>
-            <th>Cagorie</th>
-            <td>{{member.get_category_display}}</td>
+            <th class="text-end p-2">Statut membre</th>
+            <td class="p-2">{{member.get_status_display}}</td>
         </tr>
         <tr>
-            <th>Profession</th>
-            <td>{{member.profession}}</td>
+            <th class="text-end p-2">Cagorie</th>
+            <td class="p-2">{{member.get_category_display}}</td>
         </tr>
         <tr>
-            <th>Diplôme</th>
-            <td>{{member.get_grade_display}}</td>
+            <th class="text-end p-2">Profession</th>
+            <td class="p-2">{{member.profession}}</td>
         </tr>
         <tr>
-            <th>Nombre d'enfants</th>
-            <td>{{member.child_count}}</td>
+            <th class="text-end p-2">Diplôme</th>
+            <td class="p-2">{{member.get_grade_display}}</td>
+        </tr>
+        <tr>
+            <th class="text-end p-2">Nombre d'enfants</th>
+            <td class="p-2">{{member.child_count}}</td>
         </tr>
         <tr>
             <th rowspan="2">Adresse</th>
-            <td>{{member.contact.street_name}}&nbsp; {{member.contact.street_nr}}&nbsp;{{member.contact.street_box}}</td>
+            <td class="p-2">{{member.contact.street_name}}&nbsp; {{member.contact.street_nr}}&nbsp;{{member.contact.street_box}}</td>
         </tr>
         <tr>
-            <td>{{member.contact.zip_code}}&nbsp; {{member.contact.city}}</td>
+            <td class="p-2">{{member.contact.zip_code}}&nbsp; {{member.contact.city}}</td>
         </tr>
     </table>
     {% endblock %}

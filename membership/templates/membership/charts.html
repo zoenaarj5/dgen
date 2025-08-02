@@ -2,5 +2,7 @@
     {% block title %}<h3>{{title}}</h3>{% endblock %}
     {% block content %}
     <h3>Page de statistiques</h3>
-    {{ included_html | safe }}
+    <div>Des chiffres...</div>
+    <!--{{ included_html | safe }}-->
+    <script>alert("hey!");</script>
     {% endblock %}

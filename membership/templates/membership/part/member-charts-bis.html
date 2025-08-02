@@ -1,30 +1,23 @@
+{% extends "membership/master.html" %}
 {% load static %}
-<!--script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script-->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {% block title %}<h3>{{title}}</h3>{% endblock %}
+    {% block content %}
+
 <h3>{{title}}</h3>
-<!--h4>Distribution des âges</h4>
-<canvas id="ageChart" width="500" height="500"></canvas-->
-<!--h4>Distribution des Féderations</h4>
-<canvas id="federationChart" width="500" height="500"></canvas-->
-<h4>Distribution des sexes</h4>
-<canvas id="sexChart" width="500" height="500"></canvas>
-<!--div>
-{% for sx in sex_list %}
-<h4>{{sx}}</h4>
-{% endfor %}
-{% for se,co in sex_counter.items %}
-<h4>{{se}}:{{co}}</h4>
-{% endfor %}
-{% for count in sex_counts %}
-    <h5 class="bg-dark">{{count}}</h5>
-{% endfor %}
-{% for label in sex_labels %}
-<h5 class="bg-light">{{label}}</h5>
-{% endfor %}
-</div-->
-<script type="text/javascript">
-    alert("yo!");
-    /*
+<div class="vk-chart-box col-sm-6 col-md-4 col-lg-3">
+    <h4>Distribution des sexes</h4>
+    <canvas class="vk-charts" id="sexChart" widvth="200" height="200"></canvas>
+</div>
+<div class="vk-chart-box col-sm-6 col-md-4 col-lg-3">
+    <h4>Distribution des âges</h4>
+    <canvas class="vk-charts" class="vk-charts" id="ageChart" width="200" height="200"></canvas>
+</div>
+<div class="vk-chart-box col-sm-6 col-md-4 col-lg-3">
+    <h4>Distribution des fédérations</h4>
+    <canvas class="vk-charts" id="federationChart" width="200" height="500"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
     const ageData = {{age_data|safe}};
     const ageCounts = {};
     ageData.forEach(
@@ -39,13 +32,23 @@
             datasets:[{
                 label: "Nombre de membres",
                 data:ageValues,
-                backgroundColor:'rgba(54,162,235,0.5)'
+                backgroundColor:[
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)',
+                    '#FEA',
+                    '#AF0',
+                    '#BFE',
+                    '#FA0'
+                ]
             }]
         }
     });
+    
     const federationLabels = {{federation_labels|safe}};
     const federationCounts = {{federation_counts|safe}};
-    new Chart(document.getElementByid("federationChart"),{
+    new Chart(document.getElementById("federationChart"),{
         type:"pie",
         data:{
             labels: federationLabels,
@@ -63,22 +66,18 @@
                 ]
             }]
         }
-    });*/
-    alert('hello!');
-    const sexDataArr = "{{sex_data|safe|json_script:'map-data'}}";
-    sexDataParsedArr = JSON.parse(document.getElementById('map-data').textContent);
-    const sexDataMap = new Map(sexDataParsedArr);
-    console.log(sexDataMap);
-    const sexLabels = "{{sex_list}}";
-    console.log("LABELS--> "+JSON.stringify(sexLabels));
-    for(i=0; i<sexLabels.length;i++){
-        console.log(sexLabels[i]);
+    });
+    const rawData = JSON.parse('{{sex_counter|safe}}')
+    const myMap = new Map(Object.entries(rawData));
+    for(const [k,v] of myMap){
+        console.log("key = <"+k+">, value = <"+v+">");
     }
-    const sexCounts = "{{sex_counts }}";
-    console.log("COUNTS -->"+JSON.stringify(sexCounts));
-    for(i=0; i<sexCounts.length;i++){
-        console.log(sexCounts[i]);
-    }
+    console.log("LABELS:");
+    const sexLabels = [...myMap.keys()];
+    for(let l of sexLabels) console.log(l);
+    const sexCounts = [...myMap.values()];
+    console.log("COUNTS:");
+    for(let c of sexCounts) console.log(c);
     new Chart(document.getElementById("sexChart"),{
         type:"pie",
         data:{
@@ -99,3 +98,4 @@
         }
     });
 </script>
+{% endblock %}
