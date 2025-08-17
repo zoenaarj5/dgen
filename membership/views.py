@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from accounts.forms import ArepUserCreationForm
-from .forms import CountryForm, MemberForm, ContactForm, FederationForm, BranchForm, MemberEditForm
+from .forms import CountryForm, MemberForm, ContactForm, FederationForm, BranchForm, MemberEditForm, MemberFormBis
 from django.db import transaction
 from membership.models import Branch, Member, Country, Federation
 from datetime import datetime
@@ -80,10 +80,10 @@ def memberCharts(request):
 
 def charts(request):
     pageTitle = "Statistiques"
-    #memberChartsPage = memberCharts(request)
+    memberChartsPage = memberCharts(request)
     return render(request,"membership/charts.html",{
         "title":pageTitle,
-     #   "included_html":memberChartsPage
+        "included_html":memberChartsPage
     })
 
 def memberDetail(request,member_id):
@@ -136,7 +136,7 @@ def listMembersByBranch(request, branch_id):
 def addMember(request):
     if request.method == "POST":
         user_form = ArepUserCreationForm(request.POST)
-        member_form = MemberForm(request.POST)
+        member_form = MemberFormBis(request.POST)
         contact_form = ContactForm(request.POST)
         if user_form.is_valid() and member_form.is_valid() and contact_form.is_valid():
             with transaction.atomic():
@@ -151,12 +151,12 @@ def addMember(request):
                 member.save()
                 return redirect(f"/membership/add-member-success/{member.id}")
     else:
-        member_form = MemberForm()
+        member_form = MemberFormBis()
         contact_form = ContactForm()
         user_form = ArepUserCreationForm()
 
     return render(
-        request, "membership/add-member.html",{
+        request, "membership/add-member-bis.html",{
         "title":"Ajout nouveau membre",
         "member_form":member_form,
         "contact_form":contact_form,

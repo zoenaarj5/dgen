@@ -1,0 +1,25 @@
+{% extends 'accounts/master.html' %}
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+<div><a href="/accounts/request-new-password">J'ai oublié mon mot de passe</a></div>
+<form action="" method="POST" class="vk-form">
+    {% csrf_token %}
+    {% if signin_form.non_field_errors %}
+        <div class="errors">
+            {{signin_form.non_field_errors}}
+        </div>
+    {% endif %}
+    <fieldset class="vk-fieldset">
+        <legend>Authentification</legend>
+        {% for field in signin_form %}
+        <div class="vk-form-line vk-form-line-signin">{{field.label_tag}}{{field}}</div>
+        <ul class="vk-form-field-error-block">
+            {% for error in field.errors %}
+            <li class="vk-form-field-error">{{error}}</li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+        <button class="btn btn-primary">Frapper</button>
+    </fieldset>
+</form>
+{% endblock %}

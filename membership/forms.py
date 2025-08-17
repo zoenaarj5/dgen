@@ -2,16 +2,28 @@ from django import forms
 from .models import Member, Contact, Federation, Branch, Country,MemberCategory,MemberStatus,MaritalStatus,MemberTitle,Grade,Gender
 from accounts.models import ArepUser 
 class ContactForm(forms.ModelForm):
-    street_name = forms.CharField(label="Nom de la rue",required=False)
-    street_nr = forms.CharField(label="Numéro",required=False)
-    street_box = forms.CharField(label="Boîte",required=False)
-    zip_code = forms.CharField(label="Code postal",required=False)
-    mobile_nr_1 = forms.CharField(label="Nr GSM (1)",required=False)
-    mobile_nr_2 = forms.CharField(label="Nr GSM (2)",required=False)
-    fixed_nr_1 = forms.CharField(label="Nr tél. fixe",required=False)
-    email_1 = forms.EmailField(label="Email (1)",required=False)
-    email_2 = forms.EmailField(label="Email (2)",required=False)
-    city = forms.CharField(label="Localité"),
+    vkFieldLabels={
+        "street_name":"Nom de la rue",
+        "street_nr":"Numéro",
+        "street_box":"Boîte",
+        "zip_code":"Code postal",
+        "mobile_nr_1":"GSM (1)",
+        "mobile_nr_2":"GSM (2)",
+        "fixed_nr_1":"Tél. fixe (1)",
+        "email_1":"Email (1)",
+        "email_2":"Email (2)",
+        "city":"Localité"
+    }
+    street_name = forms.CharField(label=vkFieldLabels["street_name"],required=False)
+    street_nr = forms.CharField(label=vkFieldLabels["street_nr"],required=False)
+    street_box = forms.CharField(label=vkFieldLabels["street_box"],required=False)
+    zip_code = forms.CharField(label=vkFieldLabels["zip_code"],required=False)
+    mobile_nr_1 = forms.CharField(label=vkFieldLabels["mobile_nr_1"],required=False)
+    mobile_nr_2 = forms.CharField(label=vkFieldLabels["mobile_nr_2"],required=False)
+    fixed_nr_1 = forms.CharField(label=vkFieldLabels["fixed_nr_1"],required=False)
+    email_1 = forms.EmailField(label=vkFieldLabels["email_1"],required=False)
+    email_2 = forms.EmailField(label=vkFieldLabels["email_2"],required=False)
+    city = forms.CharField(label=vkFieldLabels["city"],required=False),
 
     class Meta:
         model = Contact
@@ -27,7 +39,40 @@ class ContactForm(forms.ModelForm):
         super().__init__(*args,**kwargs)
         self.fields["country"].label="Pays"
         self.fields["country"].queryset = Country.objects.order_by("name")
+        for field,label in self.vkFieldLabels.items():
+            self.fields[field].widget.attrs["placeholder"]=label
 
+class MemberFormBis(forms.ModelForm):
+    vkFieldLabels={
+        "branch":"Antenne",
+        "title":"Titre",
+        "name":"Nom",
+        "postname":"postnom",
+        "first_name":"Prénom",
+        "sex":"sexe",
+        "birthdate":"Né(e) le",
+        "sponsored":"Parrainé(e)",
+        "sponsor":"Sponsor",
+        "status":"Statut",
+        "function":"Fonction",
+        "roles":"Rôles",
+        "category":"Catégorie",
+        "profession":"Profession",
+        "grade":"Diplôme",
+        "marital_status":"Statut marital",
+        "child_count":"Nombre d'enfants"
+    }
+    class Meta:
+        model = Member
+        fields = [
+            "branch","title","name","postname","first_name","sex","birthdate","sponsored","sponsor","status","function","roles",
+            "category","profession","grade","marital_status",
+            "child_count"
+        ]
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+        for field,label in self.vkFieldLabels.items():
+            self.fields[field].widget.attrs["placeholder"]=label
 class MemberForm(forms.ModelForm):
     title = forms.ChoiceField(
         choices=MemberTitle.choices,

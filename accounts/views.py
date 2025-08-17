@@ -1,25 +1,47 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, login, logout
 from .authentication import ArepUser
-from .forms import ArepUserCreationForm,LoginForm
+from django.db import transaction
+from .forms import ArepUserCreationForm,LoginForm,ArepUserEditForm
 
 def registerView(request):
     if request.method == "post":
-        form = ArepUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit = False)
-            user.set_password(form.cleaned_data["password"])
+        user_form = ArepUserCreationForm(request.POST)
+        if user_form.is_valid():
+            user = user_form.save(commit = False)
+            user.set_password(user_form.cleaned_data["password"])
             user.save()
             login(request,user)
             return redirect("dashboard")
     else:
-        form = ArepUserCreationForm()
-    return render(request,"accounts/register.html", {"form":form})
+        user_form = ArepUserCreationForm()
+    return render(request,"accounts/register.html", {"user_form":user_form})
 
 def index(request):
     return render(request,"accounts/index.html",{
         "title":"Bienvenue"
     })
+
+def editAccountView(request,user_id):
+    
+    title="Modification de compte (admin)"
+
+    if(request.method=="POST"):
+        user_form=ArepUserEditForm(request.POST)
+        if(user.form.is_valid()):
+            with transaction.atomic():
+                user=user_form.save(commit=False)
+                user.set_password(user_form.cleaned_data.password)
+                user.save()
+                return redirect(f"/accounts/user-detail/{user.id}")
+    else:
+        user_form=ArepUserEditForm()
+
+    context={
+        "title":title,
+        "user_form":user_form
+    }
+    return render(request,"accounts/edit-account.html",context)
 
 def loginView(request):
     form = LoginForm(request.POST or None)
@@ -78,3 +100,37 @@ def dashboardView(request):
         "title": f"Welcome, {ac_data}",
         "user" : user
     })
+
+def loggedUserDetail(request):
+    logged_user = request.user
+    title="Utilisateur connecté"
+    return render(request,"logged-user-detail.html",{
+        "logged_user":logged_user,
+        "title":title
+    })
+
+def signinView(request):
+    logout(request)
+    title = "Entrez par ici"
+    if(request.method == "POST"):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            login(request,form.get_user())
+            return redirect("logged-user-detail")
+#    else:
+    form = LoginForm()
+    return render(request,"accounts/signin.html",{
+        "title":title,
+        "signin_form":form
+    })
+
+def requestNewPasswordView(request):
+    if(request.method == "POST"):
+        pass
+    else:
+        title = "Demander un nouveau mot de passe"
+        message = "Veuillez entrer votre email, un code vous sera envoyé pour réinitialiser votre mot de passe."
+        return render(request,"accounts/request-new-password.html",{
+            "title":title,
+            "message":message
+        })

@@ -3,7 +3,23 @@
 {% block content %}
     <form method="post">
         {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">Go</button>
+        {% if user_form.non_field_errors %}
+            <div class="errors">
+                {{user_form.non_field_errors}}
+            </div>
+        {% endif %}
+        {%for field in user_form%}
+        <div class="vk-form-line add-user-vk-form-line">
+            {{field}} 
+            {% if field.errors %}
+            <div class="field-errors">
+                {% for field_error in field.errors %}
+                <div class="field-error">{{field_error}}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {%endfor%}
+        <button class="btn btn-primary" type="submit">Go</button>
     </form>
 {% endblock %}

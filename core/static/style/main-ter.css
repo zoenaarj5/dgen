@@ -39,11 +39,15 @@ body{
     color:white;
 }.errors{
     color:orange;
+}.vk-form-line input,.vk-form-line select,.vk-form-line option{
+    background-color:#222;
+    color:#FEA;
+    border-bottom: solid 1px #FEA;
 }.vk-form-line>*:first-child{
     width:50%;
 }.vk-form-line>*:nth-child(2){
     color:white;
-    background-color:#2B2D83;
+    /*background-color:#2B2D83;*/
     background-color: #222;
     border-radius:.5em;
     box-shadow:none;
@@ -57,11 +61,26 @@ body{
     padding:1.5em;
     margin-top:1.5em;
     border: 1px solid #EEE;
-}.vk-chart-box{
-    display: inline-block;
+}.vk-form-field-error-block{
+    background-color: gray;
+}.vk-form-field-error{
+    background-color:black;
+    color:red;
 }.vk-charts{
     display:inline;
     border:none;/*solid 1px #FEA;*/
     height:15em !important;
     width:auto !important;
+}.event-list-box{
+    border:solid 1px #FEA;   
+    border-radius:1em;
+    padding: 0 1em 1em 1em; 
+}.event-list-box .event-box{
+    border-radius: 1em;
+    padding:.5em;
+    margin-top: 1em;
+}.event-list-box .event-box:nth-child(2n){
+    background-color: black;
+}.event-list-box .event-box:nth-child(2n+1){
+    background-color: #558;
 }

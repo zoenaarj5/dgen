@@ -3,9 +3,9 @@
     {% block title %}<h3>{{title}}</h3>{% endblock %}
     {% block content %}
     <p><a href="/membership/edit-member/{{member.id}}">Modifier le profil</a></p>
-    <table class="table-bordered bg-dark">
+    <table class="table-bordered bg-dark w-100">
         <tr>
-            <td colspan="2" class="p-2"><h3>Infos de connexion</h3></td>
+            <td colspan="2" class="p-2"><h3 class="text-center">Infos de connexion</h3></td>
         </tr>
         <tr>
             <th class="text-end p-2">Adresse email</th>
@@ -16,19 +16,31 @@
             <td class="p-2">{{member.user.phone_number}}</td>
         </tr>
         <tr>
-            <td colspan="2" class="p-2"><h3>Infos membre</h3></td>
+            <td colspan="2" class="p-2"><h3 class="text-center">Infos membre</h3></td>
         </tr>
         <tr>
             <th class="text-end p-2">Dernier changement</th>
-            <td class="p-2">{{member.last_change_date | date:'d/m/Y'}}</td>
+            <td class="p-2">{{member.last_change_date | date:'d/m/Y P'}}</td>
         </tr>
         <tr>
             <th class="text-end p-2">Email</th>
-            <td class="p-2">{{member.email}}</td>
+            <td class="p-2">{{member.contact.email_1}}</td>
         </tr>
         <tr>
-            <th class="text-end p-2">Tél</th>
-            <td class="p-2">{{member.phone_number}}</td>
+            <th class="text-end p-2">Tél fixe (1)</th>
+            <td class="p-2">{{member.contact.fixed_nr_1}}</td>
+        </tr>
+        <tr>
+            <th class="text-end p-2">Tél fixe (2)</th>
+            <td class="p-2">{{member.contact.fixed_nr_2}}</td>
+        </tr>
+        <tr>
+            <th class="text-end p-2">GSM (1)</th>
+            <td class="p-2">{{member.contact.mobile_nr_1}}</td>
+        </tr>
+        <tr>
+            <th class="text-end p-2">GSM (2)</th>
+            <td class="p-2">{{member.contact.mobile_nr_2}}</td>
         </tr>
         <tr>
             <th class="text-end p-2">Titre</th>
@@ -83,7 +95,7 @@
             <td class="p-2">{{member.child_count}}</td>
         </tr>
         <tr>
-            <th rowspan="2">Adresse</th>
+            <th rowspan="2" class="text-end">Adresse</th>
             <td class="p-2">{{member.contact.street_name}}&nbsp; {{member.contact.street_nr}}&nbsp;{{member.contact.street_box}}</td>
         </tr>
         <tr>

@@ -1,13 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin,BaseUserManager
-from django.utils import timezone
+from datetime import datetime,timedelta
 class ArepUserManager(BaseUserManager):
 
     def create_user(self, email=None,phone_number=None, password = None, **extra_fields):
         if not email and not phone_number:
             raise ValueError("Les utilisateurs doivent avoir une adresse email ou un numéro de téléphone.")
         
-        user = self.model(email=self.normalize_email(email),phone_number=phone_number, **extra_fields)
+        email = self.normalize_email(email) if email else None
+        
+        user = self.model(email=email,phone_number=phone_number, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -31,3 +33,12 @@ class ArepUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email or self.phone_number
+
+def default_expiry():
+    return datetime.now()+timedelta(minutes=10)
+
+class ArepUserPasswordRecoveryRequest():
+    creation_date = models.DateTimeField(null=True,blank=True,default=datetime.now)
+    expiry_date = models.DateTimeField(null=True,blank=True,default=default_expiry)
+    user = models.ForeignKey(ArepUser,on_delete=models.CASCADE)
+    accepted = models.BooleanField(default=False)

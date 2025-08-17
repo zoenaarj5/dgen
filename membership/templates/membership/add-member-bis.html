@@ -1,0 +1,39 @@
+{% extends "membership/master.html" %}
+    {% block title %}{{title}}{% endblock %}
+    {% block content %}
+    
+    <form class="form-group" method="post">
+        {% csrf_token %}
+        {% if user_form.non_field_errors %}
+            <div class="errors">
+                {{user_form.non_field_errors}}
+            </div>
+        {% endif %}
+        {% if member_form.non_field_errors %}
+            <div class="errors">
+                {{member_form.non_field_errors}}
+            </div>
+        {% endif %}
+        {% if contact_form.non_field_errors %}
+            <div class="errors">
+                {{contact_form.non_field_errors}}
+            </div>
+        {% endif %}
+        {%for field in user_form%}
+        <div class="vk-form-line add-member-vk-form-line">
+            {{field.label_tag}}{{field}}
+        </div>
+        {%endfor%}
+        {%for field in member_form%}
+        <div class="vk-form-line add-member-vk-form-line">
+            {{field.label_tag}}{{field}}
+        </div>
+        {%endfor%}
+        {%for field in contact_form%}
+        <div class="vk-form-line add-member-vk-form-line">
+            {{field.label_tag}}{{field}}
+        </div>
+        {%endfor%}
+        <button class="btn btn-primary" type="submit">Enregistrer</button>
+    </form>
+    {% endblock %}

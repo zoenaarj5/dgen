@@ -2,21 +2,23 @@
 {% load static %}
     {% block title %}<h3>{{title}}</h3>{% endblock %}
     {% block content %}
-
-<h3>{{title}}</h3>
-<div class="vk-chart-box col-sm-6 col-md-4 col-lg-3">
-    <h4>Distribution des sexes</h4>
-    <canvas class="vk-charts" id="sexChart" widvth="200" height="200"></canvas>
-</div>
-<div class="vk-chart-box col-sm-6 col-md-4 col-lg-3">
-    <h4>Distribution des âges</h4>
-    <canvas class="vk-charts" class="vk-charts" id="ageChart" width="200" height="200"></canvas>
-</div>
-<div class="vk-chart-box col-sm-6 col-md-4 col-lg-3">
-    <h4>Distribution des fédérations</h4>
-    <canvas class="vk-charts" id="federationChart" width="200" height="500"></canvas>
+<div class="d-grid gap-3">
+    <h3>{{title}}</h3>
+    <div class="vk-chart-box">
+        <h4>Distribution des sexes</h4>
+        <canvas class="vk-charts w-100" id="sexChart" widvth="200" height="200"></canvas>
+    </div>
+    <div class="vk-chart-box m-5">
+        <h4>Distribution des âges</h4>
+        <canvas class="vk-charts w-100" class="vk-charts" id="ageChart" width="200" height="200"></canvas>
+    </div>
+    <div class="vk-chart-box m-5">
+        <h4>Distribution des fédérations</h4>
+        <canvas class="vk-charts w-100" id="federationChart" width="200" height="500"></canvas>
+    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 <script>
     const ageData = {{age_data|safe}};
     const ageCounts = {};
@@ -33,16 +35,26 @@
                 label: "Nombre de membres",
                 data:ageValues,
                 backgroundColor:[
-                    'rgba(255, 99, 132, 0.5)',
-                    'rgba(54, 162, 235, 0.5)',
-                    'rgba(255, 206, 86, 0.5)',
-                    'rgba(75, 192, 192, 0.5)',
                     '#FEA',
-                    '#AF0',
+                    '#AB0',
                     '#BFE',
-                    '#FA0'
+                    '#FA0',
+                    '#A03'
                 ]
             }]
+        },plugins:[ChartDataLabels],
+        options:{
+            plugins:{
+                datalabels:{
+                    color:"white",
+                    backgroundColor:"#222"
+                },
+                legend:{
+                    labels:{
+                        color:"white"
+                    }
+                }
+            }
         }
     });
     
@@ -55,16 +67,27 @@
             datasets:[{
                 data:federationCounts,
                 backgroundColor:[
-                    'rgba(255, 99, 132, 0.5)',
-                    'rgba(54, 162, 235, 0.5)',
-                    'rgba(255, 206, 86, 0.5)',
-                    'rgba(75, 192, 192, 0.5)',
-                    'rgba(25, 99, 132, 0.5)',
-                    'rgba(5, 162, 235, 0.5)',
-                    'rgba(25, 206, 86, 0.5)',
-                    'rgba(7, 192, 192, 0.5)',
+                    '#FEA',
+                    '#AB0',
+                    '#BFE',
+                    '#FA0',
+                    '#A03'
                 ]
             }]
+        },
+        plugins:[ChartDataLabels],
+        options:{
+            plugins:{
+                datalabels:{
+                    color:"white",
+                    backgroundColor:"#222"
+                },
+                legend:{
+                    labels:{
+                        color:"white"
+                    }
+                }
+            }
         }
     });
     const rawData = JSON.parse('{{sex_counter|safe}}')
@@ -85,16 +108,26 @@
             datasets:[{
                 data:sexCounts,
                 backgroundColor:[
-                    'rgba(255, 99, 132, 0.5)',
-                    'rgba(54, 162, 235, 0.5)',
-                    'rgba(255, 206, 86, 0.5)',
-                    'rgba(75, 192, 192, 0.5)',
-                    'rgba(25, 99, 132, 0.5)',
-                    'rgba(5, 162, 235, 0.5)',
-                    'rgba(25, 206, 86, 0.5)',
-                    'rgba(7, 192, 192, 0.5)'
+                    '#FEA',
+                    '#AB0',
+                    '#BFE',
+                    '#FA0',
+                    '#A03'
                 ]
             }]
+        },plugins:[ChartDataLabels],
+        options:{
+            plugins:{
+                datalabels:{
+                    color:"white",
+                    backgroundColor:"#222"
+                },
+                legend:{
+                    labels:{
+                        color:"white"
+                    }
+                }
+            }
         }
     });
 </script>

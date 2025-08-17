@@ -1,0 +1,17 @@
+{% extends 'accounts/master.html' %}
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+<div><a href="/accounts/home">Accueil</a></div>
+<table>
+    <tr>
+        {% if logged_user.email %}
+        <th>Email</th>
+        <td>{{logged_user.email}}</td>
+        {% endif %}
+        {% if logged_user.phone_number %}
+        <th>Téléphone</th>
+        <td>{{logged_user.phone_number}}</td>
+        {% endif %}
+    </tr>
+</table>
+{% endblock %}

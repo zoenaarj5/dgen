@@ -4,6 +4,21 @@
     
     <form class="form-group" method="post">
         {% csrf_token %}
+        {% if user_form.non_field_errors %}
+            <div class="errors">
+                {{user_form.non_field_errors}}
+            </div>
+        {% endif %}
+        {% if member_form.non_field_errors %}
+            <div class="errors">
+                {{member_form.non_field_errors}}
+            </div>
+        {% endif %}
+        {% if contact_form.non_field_errors %}
+            <div class="errors">
+                {{contact_form.non_field_errors}}
+            </div>
+        {% endif %}
         <table class="form-table">
             <tr>
                 <td colspan="2">

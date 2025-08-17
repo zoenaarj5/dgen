@@ -1,0 +1,8 @@
+{% block content %}
+{% if user.is_authenticated %}
+<div class="login-data"><h4>{{user.email}}</h4><span>{{user.phone_number}}</span>
+</div>
+{% else %}
+<div>You are not logged in. Please go to <a href="/accounts/login">login page.</a></div>
+{% endif %}
+{% endblock %}
