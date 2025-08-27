@@ -27,6 +27,9 @@
         {%for field in member_form%}
         <div class="vk-form-line add-member-vk-form-line">
             {{field.label_tag}}{{field}}
+            {% if field.errors %}
+            <div class="errors">{{field.errors}}</div>
+            {% endif %}
         </div>
         {%endfor%}
         {%for field in contact_form%}

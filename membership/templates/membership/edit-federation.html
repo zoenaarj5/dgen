@@ -1,0 +1,43 @@
+{% extends "federationship/master.html" %}
+    {% block title %}{{title}}{% endblock %}
+    {% block content %}
+    
+    <form class="form-group" method="post">
+        {% csrf_token %}
+        {% if federation_form.non_field_errors %}
+            <div class="errors">
+                {{federation_form.non_field_errors}}
+            </div>
+        {% endif %}
+        <fieldset class="vk-fieldset">
+            <legend>Infos fédération</legend>
+            {% for field in federation_form %}
+            <div class="vk-form-line edit-federation-vk-form-line">
+                {{field.label_tag}}
+                {{field}}
+                {% if field.errors %}
+                    <div class="errors">{{field.errors}}</div>
+                {% endif %}
+            </div>
+           {% endfor %}
+        </fieldset>
+        <fieldset class="vk-fieldset">
+            <legend>Infos contact</legend>
+            {% if contact_form.non_field_errors %}
+                <div class="errors">
+                    {{contact_form.non_field_errors}}
+                </div>
+            {% endif %}
+            {% for field in contact_form %}
+            <div class="vk-form-line edit-federation-vk-form-line">
+                {{field.label_tag}}
+                {{field}}
+                {% if field.errors %}
+                    <div class="errors">{{field.errors}}</div>
+                {% endif %}
+            </div>
+           {% endfor %}
+        </fieldset>
+        <button type="submit">Enregistrer</button>
+    </form>
+    {% endblock %}

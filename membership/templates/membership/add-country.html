@@ -1,10 +1,11 @@
 {% extends "membership/master.html" %}
 {% block title %}{{title}}{% endblock %}
 {% block content %}
+<div><a href="/membership/countries/">&lt;&lt;Retour aux pays</a></div>
 <form method="post">
     {% csrf_token %}
     {{country_form.as_p}}
-    <button type="submit">Créer</button>
+    <button type="submit" class="btn btn-primary">Créer</button>
 </form>
 
 {% endblock %}

@@ -6,7 +6,9 @@
     <tr><th scope="col">Name</th><th scope="col">Country</th><th scope="col"></th></tr>
         {% for federation in federationz %}
         <tr>
-            <th scope="row"><strong>{{federation.name}}</strong></td><td>{{federation.country.name}}</strong></th><td><a href="/membership/federations/{{federation.id}}/branches/">Voir les antennes&nbsp;&gt;&gt;</a></td>
+            <th scope="row"><strong>{{federation.name}}</strong></td><td>{{federation.country.name}}</strong></th>
+            <td><a href="/membership/federations/{{federation.id}}/branches/">Voir les antennes&nbsp;&gt;&gt;</a></td>
+            <td><a href="/membership/edit-federation/{{federation.id}}">Modifier&nbsp;&gt;&gt;</a></td>
         </tr>
         {% endfor %}
     </table>

@@ -1,0 +1,13 @@
+{% extends "shop/master.html" %}
+    {% block title %}{{title}}{% endblock %}
+    {% block content %}
+        <form method="post">
+            {% csrf_token %}
+            {% if product_form.non_field_errors %}
+                <div class="errors">{{product_form.non_field_errors}}</div>
+            {% endif %}
+            <h3>Ajout de produit</h3>
+            {{product_form.as_p}}
+            <button type="submit">Ajouter</button>
+        </form>
+    {% endblock %}

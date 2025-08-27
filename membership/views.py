@@ -1,10 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from accounts.forms import ArepUserCreationForm
-from .forms import CountryForm, MemberForm, ContactForm, FederationForm, BranchForm, MemberEditForm, MemberFormBis
+from .forms import CountryForm, ContactForm, FederationForm, BranchForm, MemberEditForm, MemberFormBis
 from django.db import transaction
 from membership.models import Branch, Member, Country, Federation
-from datetime import datetime
+from django.utils import timezone
 from collections import Counter
 import json
 
@@ -34,7 +34,7 @@ def editMember(request,member_id):
                 contact.save()
                 member = member_form.save()
                 member.contact=contact
-                member.last_change_date = datetime.now()
+                member.last_change_date = timezone.now()
                 member.save()
                 return redirect(f"/membership/edit-member-success/{member.id}")
     else:
@@ -147,7 +147,7 @@ def addMember(request):
                 member = member_form.save()
                 member.user=user
                 member.contact=contact
-                member.registration_start_date = datetime.now()
+                member.registration_start_date = timezone.now()
                 member.save()
                 return redirect(f"/membership/add-member-success/{member.id}")
     else:
@@ -236,4 +236,28 @@ def addFederationSuccess(request,federation_id):
     return render(request,"membership/add-federation-success.html",{
         "federation":newFederation,
         "title":f"La fédération \"{newFederation.name}\" a été créée avec succès."
+    })
+
+def editFederation(request,federation_id):
+    federation = get_object_or_404(Federation,id=federation_id)
+    if request.method == "POST":
+        federation_form = FederationForm(request.POST,instance=federation)
+        if(federation_form.is_valid()):
+            with transaction.atomic():
+                federation = federation_form.save()
+                return redirect(f"/membership/edit-federation-success/{federation.id}")
+    else:
+        federation_form = FederationForm(instance=federation)
+
+    return render(request,"membership/add-federation.html",{
+        "title":"Modifier une fédération",
+        "federation_form":federation_form
+    })
+
+def editFederationSuccess(request,federation_id):
+    federation=get_object_or_404(Federation,id=federation_id)
+    title=f"La fédération \"{federation.name}\" a été modifiée"
+    return render(request,"membership/edit-federation-success.html",{
+        "federation":federation,
+        'title':title
     })

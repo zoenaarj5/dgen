@@ -4,14 +4,18 @@
 <div><a href="/accounts/home">Accueil</a></div>
 <table>
     <tr>
-        {% if logged_user.email %}
-        <th>Email</th>
-        <td>{{logged_user.email}}</td>
-        {% endif %}
-        {% if logged_user.phone_number %}
-        <th>Téléphone</th>
-        <td>{{logged_user.phone_number}}</td>
-        {% endif %}
+        {% if logged_user.is_authenticated %}
+            {% if logged_user.email is not None %}
+            <th>Email</th>
+            <td>{{logged_user.email}}</td>
+            {% endif %}
+            {% if logged_user.phone_number is not None %}
+            <th>Téléphone</th>
+            <td>{{logged_user.phone_number}}</td>
+            {% endif %}
+        {% else %}
+            <td colspan="2">Aucun utilisateur n'est connecté.</td>
+         {% endif %}
     </tr>
 </table>
 {% endblock %}

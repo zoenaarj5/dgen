@@ -1,0 +1,10 @@
+{% extends 'accounts/master.html' %}
+{% block title %}Authentification{% endblock %}
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Go</button>
+</form>
+<p><a href="{% url password_reset %}">Mot de passe oublié</a></p>
+{% endblock %}

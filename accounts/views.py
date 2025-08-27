@@ -1,18 +1,18 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth.views import LoginView
+from django.contrib import messages
+
 from .authentication import ArepUser
 from django.db import transaction
-from .forms import ArepUserCreationForm,LoginForm,ArepUserEditForm
+from .forms import ArepUserCreationForm,LoginForm,ArepUserEditForm,EmailOrPhoneLoginForm
 
 def registerView(request):
-    if request.method == "post":
+    if request.method == "POST":
         user_form = ArepUserCreationForm(request.POST)
         if user_form.is_valid():
-            user = user_form.save(commit = False)
-            user.set_password(user_form.cleaned_data["password"])
-            user.save()
-            login(request,user)
-            return redirect("dashboard")
+            user_form.save(commit = False)
+            return redirect("sign-in")
     else:
         user_form = ArepUserCreationForm()
     return render(request,"accounts/register.html", {"user_form":user_form})
@@ -54,7 +54,7 @@ def loginView(request):
 
             if user is not None:
                 login(request,user)
-                return redirect("home")
+                return redirect("logged-user-detail")
             else:
                 error = "Utilisateur non valide."
     return render(request,"accounts/login.html",{
@@ -89,6 +89,11 @@ def accountList(request):
         "users":users
     })
 
+def dashboard(request):
+    print("User: ",request.user)
+    print("Authenticated: ",request.user.is_authenticated)
+    return render(request,"accounts/dshbrd.html")
+
 def dashboardView(request):
     user = request.user
     if(user == None):
@@ -103,25 +108,38 @@ def dashboardView(request):
 
 def loggedUserDetail(request):
     logged_user = request.user
+    """
+    User = get_user_model()
+    logged_user = User.objects.first()
+    """
     title="Utilisateur connecté"
-    return render(request,"logged-user-detail.html",{
+    return render(request,"accounts/logged-user-detail.html",{
         "logged_user":logged_user,
         "title":title
     })
 
-def signinView(request):
-    logout(request)
-    title = "Entrez par ici"
-    if(request.method == "POST"):
-        form = LoginForm(request.POST)
+def arepSignInView(request):
+    if request.method=="POST":
+        form = EmailOrPhoneLoginForm(request,data=request.POST)
         if form.is_valid():
-            login(request,form.get_user())
-            return redirect("logged-user-detail")
-#    else:
-    form = LoginForm()
-    return render(request,"accounts/signin.html",{
-        "title":title,
-        "signin_form":form
+            user = form.get_user()
+            login(request,user)
+            messages.success(request, "Vous êtes loggé(e)!")
+            return redirect("accounts-home")
+    else:
+        form = EmailOrPhoneLoginForm()
+    return render(request,"accounts/sign-in.html",{"form":form})
+
+def arepSignOutView(request):
+    logout(request)
+    messages.success(request, "Vous êtes déloggé(e).")
+    return redirect("accounts-home")
+
+def arepSignInSuccessView(request):
+    user=request.user
+    pageTitle=f"User {user}, you are authenticated."
+    return render(request,"sign-in-success.html",{
+        "title":pageTitle
     })
 
 def requestNewPasswordView(request):

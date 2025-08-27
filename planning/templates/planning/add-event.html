@@ -1,0 +1,21 @@
+{% extends "planning/master.html" %}
+{% load static %}
+    {% block title %}<h3>{{title}}</h3>{% endblock %}
+    {% block content %}
+    <form class="form-group" method="post">
+        {% csrf_token %}
+        {% if article_form.non_field_errors %}
+            <div class="errors">
+                {{article_form.non_field_errors}}
+            </div>
+        {% endif %}
+        <fieldset class="vk-fieldset">
+            {% for field in event_form %}
+                {{ field.label_tag }}
+                {{ field }}
+            <div class="vk-form-line add-event-vk-form-line"></div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+        </fieldset>
+    </form>
+    {% endblock %}

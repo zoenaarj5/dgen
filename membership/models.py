@@ -1,6 +1,8 @@
 from django.db import models
 from accounts.models import ArepUser
-from datetime import date,datetime
+from datetime import date
+from django.utils import timezone
+
 
 class Gender(models.TextChoices):
     MALE = "M", "Homme"
@@ -40,7 +42,7 @@ class Role(models.Model):
 class Federation (models.Model):
     name = models.CharField(max_length=100,unique=True)
     description = models.TextField(max_length=500,blank=True)
-    country = models.ForeignKey(Country,on_delete=models.RESTRICT,null=True)
+    country=models.OneToOneField(Country,on_delete=models.RESTRICT,null=True)
     responsible = models.CharField(max_length=100,null=True)
     def __str__(self):
         return str(self.id) + " " + self.name
@@ -114,9 +116,9 @@ class Member (models.Model):
     first_name = models.CharField(max_length=100,null=True,blank=True)
     sex = models.CharField(max_length=10,choices = Gender.choices,default=Gender.UNKNOWN)
     birthdate = models.DateField(null=True)
-    registration_start_date = models.DateTimeField(null=True,blank=True,default=datetime.now)
+    registration_start_date = models.DateTimeField(null=True,blank=True,default=timezone.now)
     registration_end_date = models.DateTimeField(null=True,blank=True)
-    last_change_date = models.DateTimeField(null=True,blank=True,default=datetime.now)
+    last_change_date = models.DateTimeField(null=True,blank=True,default=timezone.now)
     sponsored = models.BooleanField(default=False)
     sponsor = models.ForeignKey(ArepUser,name="sponsor",on_delete=models.RESTRICT,null=True,blank=True)
     status = models.CharField(max_length=10,choices=MemberStatus.choices,default=MemberStatus.NON_ACTIVE)

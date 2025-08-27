@@ -1,0 +1,8 @@
+{% extends "shop/master.html" %}
+    {% block title %}{{title}}{% endblock %}
+    {% block content %}
+    <div><a href="/membership/federations/">&lt;&lt;Fédérations</a></div>
+    <div><a href="/membership/federation/{{federation.id}}">Détail&gt;&gt;</a></div>
+    <h5>{{federation.name}}</h5>
+    <div>{{federation.description}}</div>
+    {% endblock %}

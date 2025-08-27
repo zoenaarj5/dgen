@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.shortcuts import redirect,render, get_object_or_404
-from .forms import EmailOrPhoneLoginForms,SignupForm
+from .forms import EmailOrPhoneLoginForm,SignupForm
 from django.contrib.auth import authenticate,login
+from django.contrib.auth.views import LoginView
 from accounts.models import ArepUser
 
 def index(request):
@@ -31,18 +32,9 @@ def signupSuccessView(request, user_id):
         "title":"Vous êtes enregistréé(e)!",
     })
 
-def loginView(request):
-    form = EmailOrPhoneLoginForms(request.POST or None)
-    if (request.method == "POST" and form.is_valid()):
-        username = form.cleaned_data["username"]
-        password = form.cleaned_data["password"]
-        user = authenticate (request, username=username, password=password)
-        if user:
-            login(request,user)
-            return redirect("loginSuccess",user_id=user.id)
-        else:
-            form.add_error(None, "Entrée invalide.")
-    return render(request,"core/login.html",{"form":form})
+class EmailOrPhoneLoginView(LoginView):
+    authentication_form = EmailOrPhoneLoginForm
+    template_name = "accounts/sign-in.html"
 
 def loginSuccessView(request,user_id):
     user = get_object_or_404(ArepUser,id=user_id)

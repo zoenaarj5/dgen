@@ -1,6 +1,8 @@
 from django import forms
 from .models import ArepUser
+from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate
+from django.contrib.auth.forms import AuthenticationForm
 
 class ArepUserCreationForm(forms.ModelForm):
     vkFieldLabels={
@@ -47,16 +49,20 @@ class ArepUserCreationForm(forms.ModelForm):
         phone_number_conf=cleaned_data.get("phone_number_conf")
 
         if not email and not phone_number:
-            raise forms.ValidationError("Vous devez fournir une addresse mail ou un numéro de téléphone.")
+            raise ValidationError("Vous devez fournir une addresse mail ou un numéro de téléphone.")
 
         if email and email_conf and email!=email_conf:
-            self.add_error("email_conf","L'adresse mail et la confirmation de l'adresse mail ne correspondent pas.")
+#            self.add_error("email_conf","L'adresse mail et la confirmation de l'adresse mail ne correspondent pas.")
+            raise ValidationError("L'adresse mail et la confirmation de l'adresse mail ne correspondent pas.")
         if phone_number and phone_number_conf and phone_number!=phone_number_conf:
-            self.add_error("phone_number_conf","Le numéro de téléphone et la confirmation du numéro de téléphone ne correspondent pas.")
+#            self.add_error("phone_number_conf","Le numéro de téléphone et la confirmation du numéro de téléphone ne correspondent pas.")
+            raise ValidationError("Le numéro de téléphone et la confirmation du numéro de téléphone ne correspondent pas.")
         if password and password_conf and password!=password_conf:
-            self.add_error("password_conf","Le mot de passe et la confirmation du mot de passe ne correspondent pas.")
+#            self.add_error("password_conf","Le mot de passe et la confirmation du mot de passe ne correspondent pas.")
+            raise ValidationError("Le mot de passe et la confirmation du mot de passe ne correspondent pas.")
 
         return cleaned_data
+    
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         for field,label in self.vkFieldLabels.items():
@@ -109,4 +115,9 @@ class LoginForm(forms.Form):
     def get_user(self):
         return self.user 
 
+class EmailOrPhoneLoginForm(AuthenticationForm):
+    username = forms.CharField(
+        label = "Email ou tél.",
+        widget = forms.TextInput(attrs={"autofocus":True})
+    )
     

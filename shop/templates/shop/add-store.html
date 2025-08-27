@@ -1,0 +1,14 @@
+{% extends "shop/master.html" %}
+{% block title %}<h3>{{title}}</h3>{% endblock %}
+{% block content %}
+    <form action="" class="form-groups vk-form" method="post">
+        {% csrf_token %}
+        {% if storeForm.non_field_errors %}
+        <div class="error">{{storeForm.non_field_errors}}</div>
+        {% endif %}
+        {% for field in storeForm %}
+            <div class="vk-form-line">{{field.label}} {{field}}</div>
+        {% endfor %}
+        <button type="submit">Créer</button>    
+    </form>
+{% endblock %}

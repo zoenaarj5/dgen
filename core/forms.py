@@ -17,6 +17,5 @@ class SignupForm(forms.ModelForm):
             raise forms.ValidationError("Veuillez entrer l'email ou le numéro de téléphone.")
         return cleaned_data
 
-class EmailOrPhoneLoginForms(forms.Form):
-    username = forms.CharField(label="Email ou Numéro de téléphone")
-    password = forms.CharField(widget = forms.PasswordInput)
+class EmailOrPhoneLoginForm(forms.Form):
+    username = forms.CharField(label="Email ou Numéro de téléphone",widget=forms.TextInput(attrs={"autofocus":True}))

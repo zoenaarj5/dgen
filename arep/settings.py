@@ -84,7 +84,8 @@ WSGI_APPLICATION = 'arep.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'arep',
+        'NAME': 'pera',
+        #'NAME': 'arep',
         'USER': 'postgres',
         'PASSWORD': 'Am@vut4',
         'HOST': 'localhost',

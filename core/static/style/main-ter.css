@@ -1,6 +1,7 @@
 body{
 /*    background-color:#2B2D83;*/
     background-color:#224;
+    background-color: #112;
 }a{
     text-decoration: none;
     color:#FEA;
@@ -8,11 +9,15 @@ body{
     color:#EEE;
 }header{
     height:5em;
+}input{
+    color:white;
+    background-color: #111;
 }.sub-menu > .sub-menu-item{
-    background-color: #222;
+    background-color: #110;
     margin:.2em .2em .2em .2em;
-    border:solid 1px #2B2D83;
+/*    border:solid 1px #2B2D83;*/
     border-radius:2em;
+    box-shadow: 0 0 2px #FEA;
     padding-left: .5em;
     padding-right: .5em;
 }.sub-menu > .sub-menu-item:hover{
@@ -20,13 +25,16 @@ body{
     border-color: #EEE;
 }.sub-menu > .sub-menu-item > a{
     color:#FEA;
+}#main-menu-left{
+    padding-top:.7em;
 }#main-menu-left > .main-menu-left-item{
-    background-color: #222;
+    background-color: #110;
     border:solid 1px #2B2D83;
     margin:.2em .2em .2em .2em;
 }#main-menu-left > .main-menu-left-item:hover{
     background-color: inherit;
-    border: solid 1px #EEE;
+    border: solid 1px #110;
+    box-shadow: 0 0 4px #110;
 }#main-menu-left > .main-menu-left-item > a{
     color:#FEA;
 }#main-menu-left > .main-menu-left-item > a:hover{
@@ -34,13 +42,19 @@ body{
 }/*#main-menu-left > .main-menu-left-item > a > i{
     color:#EEE;
 }*/.title-block{
-    background-color:inherit;
-    border-bottom:solid 1px #FEA;
-    color:white;
+    background-color:#110;
+    border:none;
+    border-radius:0;
+    box-shadow: 0 0 2px #FEA;
+    color:#FEA;
+    font-size: 2em;
+    margin: .5em 0 .5em 0;
+    padding:.2em;
+    text-align: center;
 }.errors{
     color:orange;
 }.vk-form-line input,.vk-form-line select,.vk-form-line option{
-    background-color:#222;
+    background-color:#110;
     color:#FEA;
     border-bottom: solid 1px #FEA;
 }.vk-form-line>*:first-child{
@@ -48,9 +62,10 @@ body{
 }.vk-form-line>*:nth-child(2){
     color:white;
     /*background-color:#2B2D83;*/
-    background-color: #222;
+    background-color: #110;
     border-radius:.5em;
     box-shadow:none;
+    margin-top:1em;
     padding:.2em;
     width:50%;
 }.vk-form-line>*:nth-child(3){
@@ -83,4 +98,10 @@ body{
     background-color: black;
 }.event-list-box .event-box:nth-child(2n+1){
     background-color: #558;
+}.vk-login-status-box{
+    border:solid 1px white;
+}.vk-login-status-box>.vk-logged-in{
+    background-color:#153;
+}.vk-login-status-box>.vk-not-logged-in{
+    background-color:#941;
 }

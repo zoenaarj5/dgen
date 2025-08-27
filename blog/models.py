@@ -1,4 +1,4 @@
-import datetime
+from django.utils import timezone
 from django.db import models
 from accounts.models import ArepUser
 
@@ -6,7 +6,7 @@ from accounts.models import ArepUser
 class Article(models.Model):
     title = models.CharField(max_length=150,null=True,unique=True)
     content = models.TextField(max_length=1000,null=True)
-    creation_date = models.DateTimeField(default=datetime.datetime.now)
+    creation_date = models.DateTimeField(default=timezone.now)
     publishing_date = models.DateTimeField(null=True)
     removal_date = models.DateTimeField(null=True)
     blocking_date = models.DateTimeField(null=True)

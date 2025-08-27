@@ -62,6 +62,7 @@ class MemberFormBis(forms.ModelForm):
         "marital_status":"Statut marital",
         "child_count":"Nombre d'enfants"
     }
+    birthdate=forms.DateField(widget=forms.DateInput(attrs={"type":"date","class":"form-control"}))
     class Meta:
         model = Member
         fields = [
@@ -73,6 +74,7 @@ class MemberFormBis(forms.ModelForm):
         super().__init__(*args,**kwargs)
         for field,label in self.vkFieldLabels.items():
             self.fields[field].widget.attrs["placeholder"]=label
+
 class MemberForm(forms.ModelForm):
     title = forms.ChoiceField(
         choices=MemberTitle.choices,

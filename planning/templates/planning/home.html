@@ -1,0 +1,18 @@
+{% extends "planning/master.html" %}
+{% load static %}
+{% block title %}<h3>{{title}}</h3>{% endblock %}
+{% block content %}
+<h4>Évènements à venir</h4>
+<div><a href="/planning/add-event/">Ajouter un évènement &gt;&gt;</a></div>
+<div class="event-list-box">
+{% for event in events %}
+    <div class="event-box">
+        <h3 class="event-box-title-box">{{event.title}}</h3>
+        <h6 class="event-box-date-box">{{event.start_date}} &gt;&gt; {{event.end_date}}</h6>
+        <h5 class="event-box-intro-box">{{event.intro}}</h5>
+        <p class="event-box-content-box">{{event.content}}</p>
+        <div><a href="/planning/event-detail/{{event.id}}">Détail &gt;&gt;</a></div>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin,BaseUserManager
 from datetime import datetime,timedelta
+from django.utils import timezone
 class ArepUserManager(BaseUserManager):
 
     def create_user(self, email=None,phone_number=None, password = None, **extra_fields):
@@ -18,6 +19,9 @@ class ArepUserManager(BaseUserManager):
         extra_fields.setdefault("is_staff",True)
         extra_fields.setdefault("is_superuser",True)
 
+        if not email:
+            raise ValueError("Superusers must have an email address.")
+
         return self.create_user(email=email,password=password,**extra_fields)
 
 class ArepUser(AbstractBaseUser, PermissionsMixin):
@@ -32,13 +36,13 @@ class ArepUser(AbstractBaseUser, PermissionsMixin):
     objects = ArepUserManager()
 
     def __str__(self):
-        return self.email or self.phone_number
+        return self.email or self.phone_number or "Anonymous"
 
 def default_expiry():
-    return datetime.now()+timedelta(minutes=10)
+    return timezone.now()+timedelta(minutes=10)
 
 class ArepUserPasswordRecoveryRequest():
-    creation_date = models.DateTimeField(null=True,blank=True,default=datetime.now)
+    creation_date = models.DateTimeField(blank=True,default=timezone.now)
     expiry_date = models.DateTimeField(null=True,blank=True,default=default_expiry)
     user = models.ForeignKey(ArepUser,on_delete=models.CASCADE)
     accepted = models.BooleanField(default=False)

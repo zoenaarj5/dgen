@@ -3,6 +3,9 @@ body{
     width:100%;
     background-color: #046;
     color:#FEA;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}a{
+    color:white;
 }header{
     display:flex;
     height:5em;
@@ -87,4 +90,10 @@ body{
     color:#FEA;
 }.sub-menu li>a:hover{
     color:white;
+}.title-block{
+    color:#FEA;
+    font-size:2em;
+    text-align: center;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color:black;
 }

@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import datetime
+from django.utils import timezone
 from membership.models import Member, Federation
 
 class DiscountType(models.TextChoices):
@@ -51,7 +51,7 @@ class Discount(models.Model):
 
 class StorageChange(models.Model):
     productInStore = models.ForeignKey(ProductInStore,null=True,on_delete=models.RESTRICT)
-    creation_date = models.DateTimeField(default = datetime.now)
+    creation_date = models.DateTimeField(default = timezone.now)
     due_date = models.DateTimeField(null=True)
     done_date = models.DateTimeField(null=True)
     added_quantity = models.IntegerField(default=1)
@@ -60,7 +60,7 @@ class StorageChange(models.Model):
         return "On "+ self.date +", "+ str(self.added_quantity) +" items of "+self.productInStore.product.name + " were added in " + self.productInStore.store.name
 
 class Cart(models.Model):
-    creation_date = models.DateTimeField(default=datetime.now)
+    creation_date = models.DateTimeField(default=timezone.now)
     order_date = models.DateTimeField(null=True)
     payment_date = models.DateTimeField(null=True)
     delivery_date = models.DateTimeField(null=True)
@@ -84,7 +84,7 @@ class OrderLine(models.Model):
 
 class PriceChange(models.Model):
     productInStore = models.ForeignKey(ProductInStore,null=True,on_delete=models.RESTRICT)
-    creation_date = models.DateTimeField(default = datetime.now)
+    creation_date = models.DateTimeField(default = timezone.now)
     change_date = models.DateTimeField(null=True)
     new_price = models.FloatField(null=True)
     author = models.ForeignKey(Member,null=True,on_delete=models.RESTRICT)

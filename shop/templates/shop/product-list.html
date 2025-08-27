@@ -8,7 +8,8 @@
         <tr>
             <th scope="row"><strong>{{product.name}}</strong></td>
             <td>{{product.description}}</td>
-            <td><a href="/shop/products/{{product.id}}">Détail du produit&nbsp;&gt;&gt;</a></th>
+            <td><a href="/shop/products/{{product.id}}">Détail&nbsp;&gt;&gt;</a></td>
+            <td><a href="/shop/edit-product/{{product.id}}">Modifier&nbsp;&gt;&gt;</a></td>
         </tr>
         {% endfor %}
     </table>
