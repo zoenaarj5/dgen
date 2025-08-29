@@ -104,4 +104,6 @@ body{
     background-color:#153;
 }.vk-login-status-box>.vk-not-logged-in{
     background-color:#941;
+}.vk-calendar-date{
+    border:solid 1px white
 }
